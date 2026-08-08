@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LegalAI Pro — UX/UI สำหรับนักศึกษา ทนาย และสำนักงานกฎหมาย</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Sarabun','Kanit',sans-serif;background:#0a0e14;color:#c9d1d9;display:flex;flex-wrap:wrap;gap:40px;padding:40px;justify-content:center}
+h1{width:100%;text-align:center;font-size:2.2em;color:#58a6ff}
+.sub{width:100%;text-align:center;color:#8b949e;margin-bottom:32px}
+.persona-label{width:100%;text-align:center;font-size:14px;letter-spacing:4px;color:#a371f7;text-transform:uppercase;margin:24px 0 8px;border-top:1px solid #1c2128;padding-top:32px}
+
+/* Screen Frame */
+.sc{width:390px;background:#111820;border-radius:28px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.6);border:1px solid #1f2937;position:relative;margin-bottom:20px}
+.sc-h{background:#0a0e14;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #1f2937}
+.sc-h .t{font-size:12px;color:#8b949e}
+.sc-body{padding:20px;max-height:620px;overflow-y:auto}
+
+/* Components */
+.btn{padding:10px 20px;border-radius:12px;border:none;font-size:13px;font-weight:600;cursor:pointer;width:100%;text-align:center;transition:.2s}
+.btn-p{background:#1f6feb;color:#fff}
+.btn-s{background:#1c2128;color:#c9d1d9;border:1px solid #1f2937}
+.btn-g{background:#238636;color:#fff}
+.btn-o{background:transparent;border:1px solid #1f2937;color:#58a6ff}
+
+.tag{display:inline-block;padding:3px 10px;border-radius:20px;font-size:10px;font-weight:600}
+.tag-r{background:rgba(248,81,73,.15);color:#f85149}
+.tag-g{background:rgba(63,185,80,.15);color:#3fb950}
+.tag-y{background:rgba(210,153,29,.15);color:#d2991d}
+.tag-b{background:rgba(88,166,255,.15);color:#58a6ff}
+.tag-p{background:rgba(163,113,247,.15);color:#a371f7}
+
+.card{background:#1a202a;border-radius:16px;padding:16px;margin-bottom:12px;border:1px solid #1f2937}
+.card-ac{border-left:3px solid}
+.stat-r{display:flex;gap:8px}
+.stat-b{flex:1;background:#1a202a;border-radius:12px;padding:14px;text-align:center;border:1px solid #1f2937}
+.stat-b .n{font-size:22px;font-weight:800;color:#58a6ff}
+.stat-b .l{font-size:10px;color:#8b949e}
+
+h2{font-size:16px;font-weight:700;margin-bottom:12px}
+h3{font-size:12px;font-weight:600;color:#8b949e;margin:8px 0 6px;text-transform:uppercase;letter-spacing:1px}
+.pb{height:4px;background:#1c2128;border-radius:2px;margin:8px 0;overflow:hidden}
+.pb-f{height:100%;background:#238636;border-radius:2px}
+
+.av{width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1f6feb,#a371f7);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff}
+.nav-b{display:flex;justify-content:space-around;padding:14px 8px 10px;border-top:1px solid #1f2937;background:#0a0e14}
+.nav-i{display:flex;flex-direction:column;align-items:center;gap:2px;font-size:9px;color:#8b949e}
+.nav-i.ac{color:#58a6ff}
+.nav-i .ic{font-size:16px}
+
+table{width:100%;border-collapse:collapse;font-size:11px}
+th,td{padding:8px 10px;text-align:left;border-bottom:1px solid #1f2937}
+th{color:#8b949e;font-weight:600;font-size:10px;text-transform:uppercase}
+td .nm{font-weight:600;color:#c9d1d9}
+
+.input{width:100%;padding:10px 14px;background:#0a0e14;border:1px solid #1f2937;border-radius:10px;color:#c9d1d9;font-size:13px;margin-bottom:10px}
+
+.kpi-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kpi{background:#1a202a;border-radius:10px;padding:12px;border:1px solid #1f2937}
+.kpi .v{font-size:20px;font-weight:800}
+.kpi .k{font-size:9px;color:#8b949e;text-transform:uppercase}
+
+.scroll-list{max-height:200px;overflow-y:auto}
+</style>
+</head>
+<body>
+
+<h1>⚖️ LegalAI Pro — UX/UI สำหรับนักกฎหมาย</h1>
+<div class="sub">3 Personas: นักศึกษา | ทนายเดี่ยว | สำนักงานกฎหมาย</div>
+
+<!-- ================================================ -->
+<!-- PERSONA 1: LAW STUDENT                           -->
+<!-- ================================================ -->
+<div class="persona-label">🎓 Persona 1: นักศึกษากฎหมาย</div>
+
+<!-- Screen 1A: Student Home -->
+<div class="sc">
+<div class="sc-h"><span class="t">🎓 LegalAI Learn</span><span>🔔</span></div>
+<div class="sc-body">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div class="av">นศ</div>
+        <div><strong>น้องเฟิร์ส</strong><div style="font-size:10px;color:#8b949e">นักศึกษากฎหมาย ปี 3 · ม.ธรรมศาสตร์</div></div>
+    </div>
+    <div class="stat-r" style="margin-bottom:16px">
+        <div class="stat-b"><div class="n">85%</div><div class="l">ความคืบหน้า</div></div>
+        <div class="stat-b"><div class="n">12</div><div class="l">ฎีกาที่อ่าน</div></div>
+        <div class="stat-b"><div class="n">#4</div><div class="l">อันดับในคลาส</div></div>
+    </div>
+    <h3>📚 เรียนต่อจากที่ค้างไว้</h3>
+    <div class="card card-ac" style="border-color:#1f6feb">
+        <div style="display:flex;justify-content:space-between"><strong>ฎีกาที่ 7892/2565 — ฉ้อโกง</strong><span class="tag tag-b">กำลังอ่าน</span></div>
+        <div class="pb"><div class="pb-f" style="width:60%"></div></div>
+        <div style="font-size:10px;color:#8b949e">อ่านถึงบรรทัด 120/200 · มีคำถาม 3 ข้อที่ AI เตรียมไว้</div>
+    </div>
+    <div class="card card-ac" style="border-color:#a371f7">
+        <div style="display:flex;justify-content:space-between"><strong>แบบฝึกหัด: ร่างคำฟ้องคดีผู้บริโภค</strong><span class="tag tag-p">รอส่ง</span></div>
+        <div style="font-size:10px;color:#8b949e">⏰ กำหนดส่ง: พรุ่งนี้ 23:59 น.</div>
+    </div>
+    <h3>🎯 AI แนะนำ: เรื่องที่ควรเรียนต่อ</h3>
+    <div class="card"><strong>📖 ป.วิอาญา ภาค 3 — วิธีพิจารณาคดีผู้บริโภค</strong><div style="font-size:10px;color:#8b949e">เพราะคุณอ่านฎีกาเกี่ยวกับผู้บริโภคไปแล้ว 5 เรื่อง — AI เห็น pattern</div></div>
+    <button class="btn btn-p">📚 เริ่มเรียนต่อ →</button>
+</div>
+<div class="nav-b">
+    <div class="nav-i ac"><span class="ic">🏠</span>หน้าแรก</div>
+    <div class="nav-i"><span class="ic">📖</span>ฎีกา</div>
+    <div class="nav-i"><span class="ic">✍️</span>ฝึกเขียน</div>
+    <div class="nav-i"><span class="ic">🤖</span>AI ติวเตอร์</div>
+    <div class="nav-i"><span class="ic">👤</span>โปรไฟล์</div>
+</div>
+</div>
+
+<!-- Screen 1B: AI Legal Research Tutor -->
+<div class="sc">
+<div class="sc-h"><span class="t">🤖 AI ติวเตอร์</span><span>💬</span></div>
+<div class="sc-body">
+    <h2>ถาม AI เกี่ยวกับกฎหมาย</h2>
+    <p style="font-size:11px;color:#8b949e;margin-bottom:12px">✓ อ้างอิงฎีกาจริง ✓ ตรวจสอบโดยอาจารย์ ✓ ใช้เตรียมสอบได้</p>
+    <div class="card" style="background:#1a1f2e">
+        <div style="font-size:10px;color:#58a6ff;margin-bottom:4px">🤖 AI:</div>
+        <div style="font-size:12px">คุณถามเรื่อง <strong>"ความแตกต่างระหว่างฉ้อโกงกับยักยอก"</strong></div>
+        <div style="font-size:11px;color:#8b949e;margin-top:8px">📌 <strong>ฉ้อโกง (ม.341):</strong> หลอกลวงตั้งแต่แรก → ได้ทรัพย์<br>📌 <strong>ยักยอก (ม.352):</strong> ครอบครองโดยชอบ → เบียดบังทีหลัง</div>
+        <div style="font-size:10px;color:#3fb950;margin-top:8px">🔗 ฎีกาอ้างอิง: 1234/2563, 5678/2564</div>
+    </div>
+    <div class="card" style="background:#1a1f2e">
+        <div style="font-size:10px;color:#a371f7;margin-bottom:4px">📝 คำถามฝึกคิด:</div>
+        <div style="font-size:12px">A หลอก B ว่าลงทุนแล้วได้กำไร 20% — B โอนเงินให้ A 100,000 บาท — ผิดอะไร? เพราะอะไร?</div>
+    </div>
+    <input class="input" placeholder="💬 ถามคำถามกฎหมาย...">
+    <div style="display:flex;gap:8px">
+        <button class="btn btn-s" style="flex:1">📎 อัปโหลดฎีกา</button>
+        <button class="btn btn-p" style="flex:1">ส่งคำถาม</button>
+    </div>
+</div>
+</div>
+
+<!-- Screen 1C: Mock Exam /Practice -->
+<div class="sc">
+<div class="sc-h"><span class="t">✍️ ข้อสอบจำลอง</span><span>⏱️ 45:00</span></div>
+<div class="sc-body">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2>ข้อสอบเนติบัณฑิต — กฎหมายอาญา</h2>
+        <span class="tag tag-y">ข้อ 3/10</span>
+    </div>
+    <div class="pb"><div class="pb-f" style="width:30%"></div></div>
+    <div class="card" style="background:#1a1f2e;border:1px solid #1f6feb">
+        <div style="font-size:11px;color:#8b949e;margin-bottom:8px">📋 โจทย์:</div>
+        <div style="font-size:13px;line-height:1.6">นายแดงใช้ปืนจี้บังคับให้นายดำเซ็นเช็คจำนวน 500,000 บาท หลังจากนั้นนายแดงนำเช็คไปขึ้นเงินที่ธนาคารได้สำเร็จ <strong>นายแดงมีความผิดฐานใดบ้าง?</strong> ให้อธิบายพร้อมยกฎีกาประกอบ</div>
+    </div>
+    <div class="input-group" style="margin:12px 0">
+        <textarea rows="6" class="input" placeholder="พิมพ์คำตอบของคุณที่นี่..."></textarea>
+    </div>
+    <div style="display:flex;gap:8px">
+        <button class="btn btn-s" style="flex:1">💡 ขอคำใบ้</button>
+        <button class="btn btn-p" style="flex:1">📤 ส่งคำตอบ</button>
+    </div>
+    <div style="font-size:10px;color:#8b949e;margin-top:8px;text-align:center">
+        🏆 คะแนนเฉลี่ยของเพื่อน: 72% · คุณ: 78%
+    </div>
+</div>
+</div>
+
+<!-- ================================================ -->
+<!-- PERSONA 2: SOLO LAWYER                           -->
+<!-- ================================================ -->
+<div class="persona-label">👨‍⚖️ Persona 2: ทนายความเดี่ยว</div>
+
+<!-- Screen 2A: Lawyer Dashboard -->
+<div class="sc">
+<div class="sc-h"><span class="t">👨‍⚖️ Dashboard</span><span>🔔 3</span></div>
+<div class="sc-body">
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+        <div class="av">ว</div>
+        <div><strong>ดร. วิชาญ กฎหมาย</strong><div style="font-size:10px;color:#8b949e">ทนายความ · ใบอนุญาต ทน.12345/2565</div></div>
+        <span class="tag tag-p" style="margin-left:auto">GOLD ⭐</span>
+    </div>
+    <div class="stat-r" style="margin-bottom:16px">
+        <div class="stat-b"><div class="n">14</div><div class="l">เคสกำลังทำ</div></div>
+        <div class="stat-b"><div class="n">฿52K</div><div class="l">รายได้เดือนนี้</div></div>
+        <div class="stat-b"><div class="n">4.9★</div><div class="l">คะแนน</div></div>
+    </div>
+    <h3>📋 เคสเร่งด่วน</h3>
+    <div class="card card-ac" style="border-color:#f85149">
+        <div style="display:flex;justify-content:space-between"><strong>🔴 คุณสมชาย — ฉ้อโกงออนไลน์</strong><span class="tag tag-r">เหลือ 2 วัน</span></div>
+        <div style="font-size:10px;color:#f85149">⏰ กำหนดยื่นคำฟ้อง: 10 ส.ค. 2569</div>
+        <div style="font-size:10px;color:#8b949e;margin-top:4px">เอกสารที่ต้องเตรียม: คำฟ้อง + บันทึกแจ้งความ + สลิป</div>
+    </div>
+    <div class="card card-ac" style="border-color:#d2991d">
+        <div style="display:flex;justify-content:space-between"><strong>🟡 คุณนภา — เลิกจ้างไม่เป็นธรรม</strong><span class="tag tag-y">รอเอกสาร</span></div>
+        <div style="font-size:10px;color:#8b949e">📅 นัดเจรจา: 15 ส.ค. 2569 · รอ statement จากลูกความ</div>
+    </div>
+    <div class="card card-ac" style="border-color:#238636">
+        <div style="display:flex;justify-content:space-between"><strong>🟢 คุณมินท์ — ที่ดินรุกล้ำ</strong><span class="tag tag-g">รอคำพิพากษา</span></div>
+    </div>
+    <h3>⏱️ Time Tracking วันนี้</h3>
+    <div class="card">
+        <div style="display:flex;justify-content:space-between"><span>🕐 09:00-10:30</span><span>ร่างคำฟ้อง — สมชาย</span><span style="color:#58a6ff">1.5 ชม.</span></div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px"><span>🕐 11:00-12:00</span><span>ปรึกษาลูกความใหม่</span><span style="color:#58a6ff">1 ชม.</span></div>
+        <div style="display:flex;justify-content:space-between;margin-top:4px"><span>🕐 13:00-14:30</span><span>ค้นคว้าฎีกา — นภา</span><span style="color:#58a6ff">1.5 ชม.</span></div>
+        <div style="text-align:right;font-size:12px;color:#3fb950;margin-top:8px"><strong>รวม: 4 ชม. · ฿3,200</strong></div>
+    </div>
+</div>
+<div class="nav-b">
+    <div class="nav-i ac"><span class="ic">📊</span>Dashboard</div>
+    <div class="nav-i"><span class="ic">📋</span>เคส</div>
+    <div class="nav-i"><span class="ic">📄</span>เอกสาร</div>
+    <div class="nav-i"><span class="ic">💰</span>บิล</div>
+    <div class="nav-i"><span class="ic">📅</span>ปฏิทิน</div>
+</div>
+</div>
+
+<!-- Screen 2B: Case Detail -->
+<div class="sc">
+<div class="sc-h"><span style="font-size:12px;color:#58a6ff">← กลับ</span><span class="t">LA-2026-0089</span><span>⋮</span></div>
+<div class="sc-body">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <h2>สมชาย ใจดี — ฉ้อโกงออนไลน์</h2>
+        <span class="tag tag-r">⚡ ด่วน</span>
+    </div>
+    <div class="stat-r" style="margin-bottom:12px">
+        <div class="kpi"><div class="v" style="color:#f85149">2 วัน</div><div class="k">เหลือยื่นฟ้อง</div></div>
+        <div class="kpi"><div class="v" style="color:#d2991d">50,000</div><div class="k">ทุนทรัพย์ (บาท)</div></div>
+        <div class="kpi"><div class="v" style="color:#58a6ff">3</div><div class="k">เอกสารที่ต้องส่ง</div></div>
+        <div class="kpi"><div class="v" style="color:#3fb950">80%</div><div class="k">โอกาสชนะ (AI)</div></div>
+    </div>
+    <h3>📋 Timeline คดี</h3>
+    <div class="card"><div style="display:flex;gap:12px;align-items:flex-start">
+        <div style="width:2px;background:#1f2937;height:100%;position:relative;margin-top:6px"></div>
+        <div style="flex:1">
+            <div style="margin-bottom:12px"><div style="font-size:10px;color:#8b949e">1 ส.ค. 2569</div><strong>รับคดี</strong><div style="font-size:10px;color:#8b949e">ลูกความถูกโกงซื้อของออนไลน์ 50,000 บาท</div><span class="tag tag-g">✓ เสร็จ</span></div>
+            <div style="margin-bottom:12px"><div style="font-size:10px;color:#8b949e">3 ส.ค. 2569</div><strong>รวบรวมหลักฐาน</strong><div style="font-size:10px;color:#8b949e">แคปหน้าจอ + สลิป + แจ้งความออนไลน์</div><span class="tag tag-g">✓ เสร็จ</span></div>
+            <div style="margin-bottom:12px"><div style="font-size:10px;color:#8b949e">5 ส.ค. 2569</div><strong>ร่างคำฟ้อง</strong><div style="font-size:10px;color:#8b949e">AI ช่วยร่าง — รอตรวจ</div><span class="tag tag-y">● กำลังทำ</span></div>
+            <div><div style="font-size:10px;color:#f85149">⏰ 10 ส.ค. 2569</div><strong>ยื่นคำฟ้องต่อศาล</strong><div style="font-size:10px;color:#f85149">Deadline!</div></div>
+        </div>
+    </div></div>
+    <h3>📄 เอกสาร</h3>
+    <div class="card"><div style="display:flex;justify-content:space-between"><span>📄 คำฟ้อง (ร่างโดย AI)</span><span class="tag tag-y">รอตรวจ</span></div></div>
+    <div class="card"><div style="display:flex;justify-content:space-between"><span>📄 บันทึกแจ้งความ</span><span class="tag tag-g">✓ พร้อม</span></div></div>
+    <div class="card"><div style="display:flex;justify-content:space-between"><span>📄 สลิปโอนเงิน + Statement</span><span class="tag tag-g">✓ พร้อม</span></div></div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn btn-p" style="flex:1">🤖 AI ร่างเอกสาร</button>
+        <button class="btn btn-o" style="flex:1">📤 ส่งให้ลูกความ</button>
+    </div>
+</div>
+</div>
+
+<!-- Screen 2C: Document Automation -->
+<div class="sc">
+<div class="sc-h"><span class="t">🤖 AI ร่างเอกสาร</span><span>📄</span></div>
+<div class="sc-body">
+    <h2>ร่างคำฟ้อง — คดีผู้บริโภค</h2>
+    <div class="card" style="background:#1a1f2e;border:1px solid #a371f7;margin-bottom:16px">
+        <div style="font-size:10px;color:#a371f7;margin-bottom:4px">🤖 AI ร่างให้ — ใช้เวลา 15 วินาที</div>
+        <div style="font-size:10px;color:#8b949e;margin-bottom:8px">อ้างอิง: ฎีกา 7892/2565, ป.อาญา ม.341, พ.ร.บ.ผู้บริโภค</div>
+    </div>
+    <div class="card" style="font-family:monospace;font-size:11px;line-height:1.8;max-height:200px;overflow-y:auto">
+<strong>คำฟ้อง</strong><br>
+ข้อ 1. โจทก์เป็นบุคคลธรรมดา จำเลยประกอบกิจการขายสินค้าออนไลน์...<br>
+ข้อ 2. เมื่อวันที่ 1 สิงหาคม 2569 โจทก์ได้สั่งซื้อสินค้าจากจำเลย...<br>
+ข้อ 3. จำเลยได้รับเงินแล้วแต่ไม่ส่งมอบสินค้า...<br>
+ข้อ 4. การกระทำของจำเลยเป็นความผิดฐานฉ้อโกง...<br>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:12px">
+        <button class="btn btn-p" style="flex:1">✏️ แก้ไข</button>
+        <button class="btn btn-g" style="flex:1">📥 ดาวน์โหลด .docx</button>
+    </div>
+    <button class="btn btn-o" style="margin-top:8px">📤 ส่งให้ทนายพี่เลี้ยงตรวจ</button>
+</div>
+</div>
+
+<!-- ================================================ -->
+<!-- PERSONA 3: LAW FIRM                              -->
+<!-- ================================================ -->
+<div class="persona-label">🏢 Persona 3: สำนักงานกฎหมาย</div>
+
+<!-- Screen 3A: Firm Dashboard -->
+<div class="sc">
+<div class="sc-h"><span class="t">🏢 ธรรมนิติ律师事务所</span><span>🔔 8</span></div>
+<div class="sc-body">
+    <h2>ภาพรวมสำนักงาน</h2>
+    <div class="kpi-grid" style="margin-bottom:16px">
+        <div class="kpi"><div class="v" style="color:#58a6ff">8</div><div class="k">ทนายในทีม</div></div>
+        <div class="kpi"><div class="v" style="color:#3fb950">฿890K</div><div class="k">รายได้เดือนนี้</div></div>
+        <div class="kpi"><div class="v">47</div><div class="k">เคสกำลังทำ</div></div>
+        <div class="kpi"><div class="v" style="color:#d2991d">85%</div><div class="k">Utilization Rate</div></div>
+    </div>
+    <h3>📊 ประสิทธิภาพรายบุคคล</h3>
+    <table>
+        <tr><th>ทนาย</th><th>เคส</th><th>รายได้</th><th>Util.</th><th>คะแนน</th></tr>
+        <tr><td class="nm">ดร.วิชาญ</td><td>14</td><td>฿52K</td><td>90%</td><td>4.9★</td></tr>
+        <tr><td class="nm">คุณนภา</td><td>11</td><td>฿38K</td><td>82%</td><td>4.7★</td></tr>
+        <tr><td class="nm">คุณมินท์</td><td>9</td><td>฿31K</td><td>78%</td><td>4.8★</td></tr>
+        <tr><td class="nm">คุณโจ</td><td>8</td><td>฿28K</td><td>75%</td><td>4.5★</td></tr>
+        <tr><td class="nm">คุณไอซ์</td><td>5</td><td>฿15K</td><td>60%</td><td>-</td></tr>
+    </table>
+    <h3>🔴 เคสที่ต้องติดตาม</h3>
+    <div class="card card-ac" style="border-color:#f85149">
+        <strong>LA-0089 สมชาย — ฉ้อโกง</strong>
+        <div style="font-size:10px;color:#f85149">⏰ Deadline พรุ่งนี้ · ผู้รับผิดชอบ: ดร.วิชาญ</div>
+    </div>
+    <div class="card card-ac" style="border-color:#f85149">
+        <strong>LA-0102 บริษัท A — ฟ้องเรียกค่าเสียหาย 5M</strong>
+        <div style="font-size:10px;color:#f85149">⏰ ผู้รับผิดชอบ: คุณนภา · รอเอกสารจากลูกความ 3 วัน</div>
+    </div>
+    <button class="btn btn-p">📊 ดูรายงานฉบับเต็ม →</button>
+</div>
+</div>
+
+<!-- Screen 3B: Client Pipeline / CRM -->
+<div class="sc">
+<div class="sc-h"><span class="t">📊 Client Pipeline</span><span>➕</span></div>
+<div class="sc-body">
+    <h2>ลูกความใหม่ — Pipeline</h2>
+    <div class="stat-r" style="margin-bottom:16px">
+        <div class="stat-b"><div class="n">23</div><div class="l">Lead เข้ามา</div></div>
+        <div class="stat-b"><div class="n">8</div><div class="l">นัดปรึกษา</div></div>
+        <div class="stat-b"><div class="n">5</div><div class="l">ว่าความ</div></div>
+    </div>
+    <h3>🆕 Lead ใหม่ — รอตอบกลับ</h3>
+    <div class="card">
+        <div style="display:flex;justify-content:space-between"><strong>🔵 Hot Lead</strong><span class="tag tag-b">ใหม่</span></div>
+        <div style="margin-top:4px"><strong>คุณเอ — ฟ้องเรียกค่าเช่า 200K</strong></div>
+        <div style="font-size:10px;color:#8b949e">📱 มาจาก LegalAI Marketplace · สนใจว่าความ</div>
+        <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn btn-p" style="flex:1;font-size:11px">📞 ติดต่อ</button>
+            <button class="btn btn-s" style="flex:1;font-size:11px">👤 Assign</button>
+        </div>
+    </div>
+    <div class="card">
+        <div style="display:flex;justify-content:space-between"><strong>🟡 Warm Lead</strong><span class="tag tag-y">รอ 2 วัน</span></div>
+        <div style="margin-top:4px"><strong>คุณบี — ปรึกษากฎหมายแรงงาน</strong></div>
+        <div style="font-size:10px;color:#8b949e">💬 ตอบแชทครั้งสุดท้าย: เมื่อวาน 14:30 น.</div>
+        <button class="btn btn-o" style="margin-top:8px;font-size:11px">💬 ส่งข้อความติดตาม</button>
+    </div>
+    <h3>📈 Conversion Funnel</h3>
+    <div class="card">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px"><span>Lead → นัดปรึกษา</span><span style="color:#58a6ff">35%</span></div>
+        <div class="pb"><div class="pb-f" style="width:35%"></div></div>
+        <div style="display:flex;justify-content:space-between;margin:8px 0 4px"><span>นัดปรึกษา → ว่าความ</span><span style="color:#3fb950">63%</span></div>
+        <div class="pb"><div class="pb-f" style="width:63%"></div></div>
+    </div>
+</div>
+</div>
+
+<!-- Screen 3C: Financial Overview -->
+<div class="sc">
+<div class="sc-h"><span class="t">💰 การเงิน</span><span>📥</span></div>
+<div class="sc-body">
+    <h2>ภาพรวมการเงิน — สิงหาคม 2569</h2>
+    <div class="kpi-grid" style="margin-bottom:16px">
+        <div class="kpi"><div class="v" style="color:#3fb950">฿890K</div><div class="k">รายได้รวม</div></div>
+        <div class="kpi"><div class="v">฿320K</div><div class="k">ค่าใช้จ่าย</div></div>
+        <div class="kpi"><div class="v" style="color:#58a6ff">฿570K</div><div class="k">กำไร</div></div>
+        <div class="kpi"><div class="v">64%</div><div class="k">Profit Margin</div></div>
+    </div>
+    <h3>📊 รายได้แยกตามทนาย</h3>
+    <table>
+        <tr><th>ทนาย</th><th>รายได้</th><th>%</th><th>ค่าใช้จ่าย</th><th>กำไร</th></tr>
+        <tr><td class="nm">ดร.วิชาญ</td><td>฿280K</td><td>31%</td><td>฿45K</td><td style="color:#3fb950">฿235K</td></tr>
+        <tr><td class="nm">คุณนภา</td><td>฿220K</td><td>25%</td><td>฿38K</td><td style="color:#3fb950">฿182K</td></tr>
+        <tr><td class="nm">คุณมินท์</td><td>฿180K</td><td>20%</td><td>฿32K</td><td style="color:#3fb950">฿148K</td></tr>
+        <tr><td class="nm">คุณโจ</td><td>฿140K</td><td>16%</td><td>฿28K</td><td style="color:#3fb950">฿112K</td></tr>
+        <tr><td class="nm">คุณไอซ์</td><td>฿70K</td><td>8%</td><td>฿15K</td><td style="color:#3fb950">฿55K</td></tr>
+    </table>
+    <div class="card" style="margin-top:12px;display:flex;justify-content:space-between">
+        <div>
+            <div style="font-size:10px;color:#8b949e">💰 รอเรียกเก็บ</div>
+            <div style="font-size:20px;font-weight:800;color:#d2991d">฿145,000</div>
+        </div>
+        <div>
+            <div style="font-size:10px;color:#8b949e">📅 เกินกำหนด</div>
+            <div style="font-size:20px;font-weight:800;color:#f85149">฿32,000</div>
+        </div>
+    </div>
+    <button class="btn btn-p" style="margin-top:12px">📥 สรุปรายงานภาษี</button>
+</div>
+</div>
+
+</body>
+</html>

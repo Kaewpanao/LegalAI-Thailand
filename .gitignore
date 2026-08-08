@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Large files
+*.pdf
+*.docx
+
+# Temp
+*_tmp_*
+_tmp_*
+
+# Secrets (DON'T COMMIT!)
+google_client_secret*.json
+google_token*.json
+*.env

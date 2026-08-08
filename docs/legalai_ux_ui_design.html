@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LegalAI Thailand — UX/UI Design System</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { 
+    font-family: 'Sarabun','Kanit',sans-serif; background:#0d1117; color:#c9d1d9;
+    display:flex; flex-wrap:wrap; gap:32px; padding:40px; justify-content:center;
+}
+h1 { width:100%; text-align:center; font-size:2em; color:#58a6ff; margin-bottom:8px; }
+.sub { width:100%; text-align:center; color:#8b949e; margin-bottom:32px; }
+
+/* === SCREEN FRAME === */
+.screen {
+    width:375px; background:#161b22; border-radius:24px; overflow:hidden;
+    box-shadow:0 20px 60px rgba(0,0,0,.5); border:1px solid #30363d;
+    position:relative;
+}
+.screen-header {
+    background:#0d1117; padding:12px 16px; display:flex; align-items:center;
+    justify-content:space-between; border-bottom:1px solid #21262d;
+}
+.screen-header .time { font-size:12px; color:#8b949e; }
+.screen-header .icons { display:flex; gap:4px; }
+.screen-body { padding:20px 16px 28px; max-height:600px; overflow-y:auto; }
+.screen-label {
+    text-align:center; font-size:11px; color:#8b949e; letter-spacing:3px;
+    text-transform:uppercase; margin-top:-8px; margin-bottom:40px;
+}
+
+/* === COLORS === */
+:root {
+    --blue:#58a6ff; --green:#3fb950; --red:#f85149; --yellow:#d2991d;
+    --purple:#a371f7; --teal:#39d2c0; --bg:#161b22; --card:#21262d;
+    --border:#30363d; --text:#c9d1d9; --muted:#8b949e;
+}
+
+/* === COMPONENTS === */
+.btn { 
+    padding:10px 20px; border-radius:12px; border:none; font-size:14px; 
+    font-weight:600; cursor:pointer; transition:.2s; width:100%; text-align:center;
+}
+.btn-primary { background:#1f6feb; color:#fff; }
+.btn-primary:hover { background:#388bfd; }
+.btn-secondary { background:#21262d; color:#c9d1d9; border:1px solid #30363d; }
+.btn-green { background:#238636; color:#fff; }
+.btn-outline { background:transparent; border:1px solid #30363d; color:#58a6ff; }
+
+.tag { 
+    display:inline-block; padding:2px 8px; border-radius:20px; font-size:10px; 
+    font-weight:600; letter-spacing:.5px;
+}
+.tag-red { background:rgba(248,81,73,.15); color:#f85149; }
+.tag-green { background:rgba(63,185,80,.15); color:#3fb950; }
+.tag-yellow { background:rgba(210,153,29,.15); color:#d2991d; }
+.tag-blue { background:rgba(88,166,255,.15); color:#58a6ff; }
+.tag-purple { background:rgba(163,113,247,.15); color:#a371f7; }
+
+.card { 
+    background:#21262d; border-radius:16px; padding:16px; margin-bottom:12px;
+    border:1px solid #30363d;
+}
+
+.trust-badge {
+    display:flex; align-items:center; gap:6px; font-size:11px; color:#3fb950;
+    background:rgba(63,185,80,.1); padding:4px 10px; border-radius:20px;
+}
+.trust-badge::before { content:'✓'; font-weight:700; }
+
+.steps { counter-reset:step; }
+.step {
+    display:flex; gap:12px; align-items:flex-start; padding:12px 0;
+    border-bottom:1px solid #21262d; position:relative;
+}
+.step::before {
+    counter-increment:step; content:counter(step);
+    width:28px; height:28px; border-radius:50%; background:#1f6feb;
+    color:#fff; display:flex; align-items:center; justify-content:center;
+    font-size:13px; font-weight:700; flex-shrink:0;
+}
+.step-done::before { background:#238636; content:'✓'; }
+
+.input-group { margin-bottom:12px; }
+.input-group label { display:block; font-size:12px; color:#8b949e; margin-bottom:4px; }
+.input-group input, .input-group textarea, .input-group select {
+    width:100%; padding:10px 14px; background:#0d1117; border:1px solid #30363d;
+    border-radius:10px; color:#c9d1d9; font-size:14px; font-family:inherit;
+}
+
+.lawyer-card { display:flex; gap:12px; align-items:center; }
+.lawyer-avatar {
+    width:48px; height:48px; border-radius:50%; background:linear-gradient(135deg,#1f6feb,#a371f7);
+    display:flex; align-items:center; justify-content:center; font-size:18px;
+}
+.stars { color:#d2991d; font-size:12px; }
+
+.nav-bottom {
+    display:flex; justify-content:space-around; padding:12px 8px;
+    border-top:1px solid #21262d; background:#0d1117;
+}
+.nav-item { 
+    display:flex; flex-direction:column; align-items:center; gap:2px;
+    font-size:10px; color:#8b949e; cursor:pointer;
+}
+.nav-item.active { color:#58a6ff; }
+.nav-icon { font-size:18px; }
+
+/* === Screen-specific === */
+.hero-title { font-size:22px; font-weight:800; line-height:1.3; margin-bottom:4px; }
+.hero-title .ai { background:linear-gradient(135deg,#58a6ff,#a371f7); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.hero-sub { font-size:13px; color:#8b949e; margin-bottom:16px; }
+
+.trust-strip {
+    display:flex; gap:16px; justify-content:center; padding:12px 0;
+    font-size:10px; color:#8b949e;
+}
+.trust-strip span { display:flex; align-items:center; gap:4px; }
+
+.stat-row { display:flex; gap:8px; }
+.stat-box { 
+    flex:1; background:#21262d; border-radius:12px; padding:12px; text-align:center;
+    border:1px solid #30363d;
+}
+.stat-box .num { font-size:24px; font-weight:800; color:#58a6ff; }
+.stat-box .label { font-size:10px; color:#8b949e; }
+
+.progress-bar {
+    height:4px; background:#21262d; border-radius:2px; margin:8px 0; overflow:hidden;
+}
+.progress-bar .fill { height:100%; background:#238636; border-radius:2px; transition:.3s; }
+
+.deadline-alert {
+    background:rgba(248,81,73,.1); border:1px solid rgba(248,81,73,.2);
+    border-radius:12px; padding:12px; display:flex; align-items:center; gap:8px;
+    margin:12px 0;
+}
+.deadline-alert .icon { font-size:24px; }
+.deadline-alert .text { font-size:12px; }
+.deadline-alert .days { font-size:20px; font-weight:800; color:#f85149; }
+
+h2 { font-size:16px; font-weight:700; margin-bottom:12px; color:#c9d1d9; }
+h3 { font-size:13px; font-weight:600; margin:8px 0 4px; color:#8b949e; }
+</style>
+</head>
+<body>
+
+<h1>🎨 LegalAI Thailand — UX/UI Design System</h1>
+<div class="sub">อิงจาก Human Drives + Consumer Insight + AI Trust Research</div>
+
+<!-- ============ SCREEN 1: LANDING ============ -->
+<div class="screen-label">📱 Screen 1: Landing Page</div>
+<div class="screen">
+    <div class="screen-header">
+        <span class="time">9:41</span>
+        <span class="icons">📶 🔋</span>
+    </div>
+    <div class="screen-body">
+        <div style="font-size:11px;color:#58a6ff;letter-spacing:2px;margin-bottom:8px;">⚖️ LEGALAI</div>
+        <div class="hero-title">
+            มีปัญหา<span class="ai">กฎหมาย?</span><br>รู้ว่าต้องทำอะไร<br>ใน <span style="color:#3fb950;">5 นาที</span>
+        </div>
+        <div class="hero-sub">AI ช่วยค้น + ทนายตรวจสอบ — ไม่ต้องรู้กฎหมายก็เริ่มได้</div>
+        
+        <div class="trust-strip">
+            <span>✓ ตรวจโดยทนาย</span>
+            <span>🔒 PDPA</span>
+            <span>⚖️ 50,000+ คนใช้</span>
+        </div>
+
+        <input class="input-group input" placeholder="🔍 เล่าปัญหาของคุณเป็นภาษาธรรมดา..." style="margin:16px 0;">
+        
+        <button class="btn btn-primary">เริ่มวิเคราะห์ปัญหาของฉัน →</button>
+        
+        <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+            <span class="tag tag-red">🔥 ถูกโกงออนไลน์</span>
+            <span class="tag tag-yellow">⚡ ถูกเลิกจ้าง</span>
+            <span class="tag tag-blue">💰 โดนทวงหนี้</span>
+            <span class="tag tag-purple">🏠 ปัญหาที่ดิน</span>
+            <span class="tag tag-green">👨‍👩‍👧 ครอบครัว</span>
+        </div>
+        
+        <div class="stat-row" style="margin-top:16px;">
+            <div class="stat-box">
+                <div class="num">50K+</div>
+                <div class="label">คนใช้แก้ปัญหา</div>
+            </div>
+            <div class="stat-box">
+                <div class="num">98%</div>
+                <div class="label">คำแนะนำมีที่มาอ้างอิง</div>
+            </div>
+            <div class="stat-box">
+                <div class="num">4.9★</div>
+                <div class="label">ความพึงพอใจ</div>
+            </div>
+        </div>
+        
+        <div class="nav-bottom" style="margin:'16px -16px -28px';">
+            <div class="nav-item active"><span class="nav-icon">🏠</span>หน้าแรก</div>
+            <div class="nav-item"><span class="nav-icon">🔍</span>ค้นหา</div>
+            <div class="nav-item"><span class="nav-icon">📋</span>คดีของฉัน</div>
+            <div class="nav-item"><span class="nav-icon">👤</span>โปรไฟล์</div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN 2: DIAGNOSIS ============ -->
+<div class="screen-label">📱 Screen 2: AI Diagnosis</div>
+<div class="screen">
+    <div class="screen-header">
+        <span style="font-size:12px;color:#58a6ff;">← กลับ</span>
+        <span class="time" style="font-size:11px;">ขั้นตอนที่ 1/4</span>
+        <span class="icons"></span>
+    </div>
+    <div class="screen-body">
+        <div class="progress-bar"><div class="fill" style="width:25%"></div></div>
+        <div style="font-size:11px;color:#8b949e;margin-bottom:4px;">AI กำลังวิเคราะห์...</div>
+        <h2>🤖 เล่าให้ฟังหน่อย — เกิดอะไรขึ้น?</h2>
+        <p style="font-size:12px;color:#8b949e;margin-bottom:16px;">
+            🛡️ ข้อมูลของคุณถูกเข้ารหัส — มีเพียงคุณและทนายที่ดูแลคดีเท่านั้นที่เห็น
+        </p>
+        
+        <div class="card" style="border-left:3px solid #58a6ff;">
+            <div style="font-size:11px;color:#58a6ff;margin-bottom:4px;">💡 AI แนะนำ: จากข้อมูลเบื้องต้น คุณอาจอยู่ในหมวด</div>
+            <div class="tag tag-red">ถูกโกงออนไลน์</div>
+            <span style="font-size:10px;color:#8b949e;"> — มีคนใช้แก้ปัญหานี้สำเร็จ 12,483 คน</span>
+        </div>
+
+        <div class="input-group">
+            <label>🔍 คุณโอนเงินไปเท่าไหร่?</label>
+            <input placeholder="เช่น 5,000 บาท">
+        </div>
+        <div class="input-group">
+            <label>📅 โอนเงินเมื่อไหร่?</label>
+            <input type="date" value="2026-08-01">
+        </div>
+        <div class="input-group">
+            <label>📱 คุยผ่านช่องทางไหน?</label>
+            <select><option>Facebook</option><option>LINE</option><option>Shopee</option><option>Lazada</option><option>อื่นๆ</option></select>
+        </div>
+        <div class="input-group">
+            <label>📝 เล่ารายละเอียดเพิ่มเติม (ถ้ามี)</label>
+            <textarea rows="2" placeholder="สิ่งที่ผู้ขายบอก หลักฐานที่มี..."></textarea>
+        </div>
+        
+        <button class="btn btn-primary">下一步 → ดู Action Plan</button>
+    </div>
+</div>
+
+<!-- ============ SCREEN 3: ACTION PLAN ============ -->
+<div class="screen-label">📱 Screen 3: Action Plan</div>
+<div class="screen">
+    <div class="screen-header">
+        <span style="font-size:12px;color:#58a6ff;">← กลับ</span>
+        <span class="time" style="font-size:10px;color:#3fb950;">● อัปเดตล่าสุด: 5 นาทีที่แล้ว</span>
+        <span class="icons"></span>
+    </div>
+    <div class="screen-body">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+            <div>
+                <div style="font-size:10px;color:#f85149;letter-spacing:1px;">⚡ ดำเนินการด่วน</div>
+                <h2>Action Plan: ถูกโกงออนไลน์</h2>
+            </div>
+            <div class="trust-badge">✓ ตรวจโดยทนาย</div>
+        </div>
+        
+        <div class="deadline-alert">
+            <div class="icon">⏰</div>
+            <div>
+                <div class="days">เหลือ 3 วัน</div>
+                <div class="text">ในการอายัดบัญชีก่อนเงินถูกถอน</div>
+            </div>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div>
+                    <strong>รวบรวมหลักฐาน</strong>
+                    <div style="font-size:11px;color:#8b949e;">แคปหน้าจอแชท + สลิปโอนเงิน</div>
+                    <span class="tag tag-green">ทำเองได้</span>
+                </div>
+            </div>
+            <div class="step">
+                <div>
+                    <strong>อายัดบัญชีปลายทาง</strong>
+                    <div style="font-size:11px;color:#8b949e;">โทร <span style="color:#58a6ff;">1441</span> (AOC) หรือธนาคารของคุณ</div>
+                    <span class="tag tag-red">ด่วน!</span>
+                </div>
+            </div>
+            <div class="step">
+                <div>
+                    <strong>แจ้งความออนไลน์</strong>
+                    <div style="font-size:11px;color:#8b949e;">thaipoliceonline.go.th</div>
+                    <span class="tag tag-green">ทำเองได้</span>
+                </div>
+            </div>
+            <div class="step">
+                <div>
+                    <strong>ติดตามคดี</strong>
+                    <div style="font-size:11px;color:#8b949e;">ตรวจสอบสถานะทุกสัปดาห์</div>
+                </div>
+            </div>
+        </div>
+        
+        <button class="btn btn-green" style="margin-top:12px;">📄 ดาวน์โหลดเอกสารที่ต้องใช้</button>
+        <button class="btn btn-outline" style="margin-top:8px;">👨‍⚖️ ปรึกษาทนาย — เริ่มต้น 299 บาท</button>
+        
+        <div style="margin-top:12px;font-size:10px;color:#8b949e;text-align:center;">
+            ⚖️ อ้างอิง: ป.อาญา ม.341 · พ.ร.บ.คอมพิวเตอร์ ม.14
+        </div>
+    </div>
+</div>
+
+<!-- ============ SCREEN 4: LAWYER MARKETPLACE ============ -->
+<div class="screen-label">📱 Screen 4: Lawyer Marketplace</div>
+<div class="screen">
+    <div class="screen-header">
+        <span class="time">👨‍⚖️ เลือกทนาย</span>
+        <span class="icons">🔍</span>
+    </div>
+    <div class="screen-body">
+        <h2>ทนายที่เชี่ยวชาญคดีของคุณ</h2>
+        <p style="font-size:11px;color:#8b949e;margin-bottom:16px;">✓ ทุกคนผ่านการตรวจสอบโดย LegalAI</p>
+        
+        <div class="card">
+            <div class="lawyer-card">
+                <div class="lawyer-avatar">ว</div>
+                <div style="flex:1;">
+                    <strong>ดร. วิชาญ กฎหมาย</strong>
+                    <div class="stars">★★★★★ 4.9 (238 คดี)</div>
+                    <div style="font-size:10px;color:#8b949e;">⚖️ กฎหมายผู้บริโภค · 15 ปี</div>
+                </div>
+                <div class="tag tag-green">ว่าง</div>
+            </div>
+            <div style="font-size:11px;color:#8b949e;margin-top:8px;">
+                "เคยว่าความคดีโกงออนไลน์มาแล้ว 150+ คดี — 80% จบโดยไม่ต้องขึ้นศาล"
+            </div>
+            <div style="display:flex;gap:8px;margin-top:12px;">
+                <span style="font-size:12px;color:#c9d1d9;">💰 ปรึกษา 30 นาที</span>
+                <strong style="color:#3fb950;">299 บาท</strong>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="lawyer-card">
+                <div class="lawyer-avatar">น</div>
+                <div style="flex:1;">
+                    <strong>คุณนภา รักษ์ธรรม</strong>
+                    <div class="stars">★★★★★ 4.7 (156 คดี)</div>
+                    <div style="font-size:10px;color:#8b949e;">⚖️ กฎหมายแพ่ง · 8 ปี</div>
+                </div>
+                <div class="tag tag-yellow">รอ 2 ชม.</div>
+            </div>
+            <div style="display:flex;gap:8px;margin-top:8px;">
+                <span style="font-size:12px;color:#c9d1d9;">💰 ปรึกษา 30 นาที</span>
+                <strong style="color:#3fb950;">250 บาท</strong>
+            </div>
+        </div>
+        
+        <button class="btn btn-outline" style="margin-top:8px;">📋 ดูทนายทั้งหมด 12 คน →</button>
+    </div>
+</div>
+
+<!-- ============ SCREEN 5: LAWYER DASHBOARD ============ -->
+<div class="screen-label">📱 Screen 5: Lawyer Dashboard</div>
+<div class="screen">
+    <div class="screen-header">
+        <span class="time">👨‍⚖️ Dashboard</span>
+        <span class="icons">🔔</span>
+    </div>
+    <div class="screen-body">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+            <div>
+                <div style="font-size:10px;color:#8b949e;">สวัสดี</div>
+                <h2 style="margin:0;">ดร. วิชาญ</h2>
+            </div>
+            <div class="tag tag-purple">GOLD</div>
+        </div>
+        
+        <div class="stat-row" style="margin-bottom:16px;">
+            <div class="stat-box">
+                <div class="num">12</div><div class="label">เคสกำลังทำ</div>
+            </div>
+            <div class="stat-box">
+                <div class="num">3</div><div class="label">นัดหมายวันนี้</div>
+            </div>
+            <div class="stat-box">
+                <div class="num">฿45K</div><div class="label">รายได้เดือนนี้</div>
+            </div>
+        </div>
+
+        <h3>📋 เคสที่ต้องดำเนินการ</h3>
+        <div class="card" style="border-left:3px solid #f85149;">
+            <div style="display:flex;justify-content:space-between;">
+                <strong>คุณสมชาย — ถูกโกงออนไลน์</strong>
+                <span class="tag tag-red">ด่วน</span>
+            </div>
+            <div style="font-size:10px;color:#f85149;margin-top:4px;">⏰ กำหนดส่งเอกสาร: พรุ่งนี้</div>
+        </div>
+        <div class="card" style="border-left:3px solid #d2991d;">
+            <div style="display:flex;justify-content:space-between;">
+                <strong>คุณนภา — ฟ้องเรียกค่าแรง</strong>
+                <span class="tag tag-yellow">รอเอกสาร</span>
+            </div>
+            <div style="font-size:10px;color:#8b949e;margin-top:4px;">📅 นัดศาล: 15 ส.ค. 2569</div>
+        </div>
+        <div class="card" style="border-left:3px solid #238636;">
+            <strong>คุณมินท์ — ที่ดินรุกล้ำ</strong>
+            <span class="tag tag-green">รอคำพิพากษา</span>
+        </div>
+        
+        <button class="btn btn-primary" style="margin-top:8px;">📊 ดูรายงานทั้งหมด</button>
+    </div>
+</div>
+
+</body>
+</html>

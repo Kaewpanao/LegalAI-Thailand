@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LegalAI Thailand — บัตรประชาชนกฎหมาย</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: 'Sarabun', 'Kanit', sans-serif; 
+    background: #0a0a1a; color: #fff; 
+    display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; 
+    padding: 60px 20px; min-height: 100vh;
+}
+h1 { width: 100%; text-align: center; font-size: 2.5em; color: #64b5f6; margin-bottom: 20px; }
+h2 { font-size: 1.1em; color: #90caf9; text-align: center; margin-bottom: 50px; width: 100%; }
+
+/* === CARD BASE === */
+.card {
+    width: 420px; height: 260px; border-radius: 20px; padding: 28px 32px;
+    position: relative; overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.08);
+    transition: transform 0.3s, box-shadow 0.3s;
+    display: flex; flex-direction: column; justify-content: space-between;
+}
+.card:hover { transform: translateY(-8px); box-shadow: 0 30px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.15); }
+.card::before {
+    content: ''; position: absolute; top: -60px; right: -60px;
+    width: 200px; height: 200px; border-radius: 50%; opacity: 0.08;
+}
+
+/* === CARD 1: MEMBER CARD === */
+.card-1 { background: linear-gradient(135deg, #0d1b3e 0%, #1a3a6b 40%, #0f2347 100%); }
+.card-1::before { background: #64b5f6; }
+.card-1 .chip { 
+    width: 50px; height: 36px; background: linear-gradient(135deg, #ffd700, #ffb300);
+    border-radius: 6px; position: absolute; top: 28px; left: 32px;
+}
+.card-1 .chip::after {
+    content: ''; position: absolute; top: 8px; left: 12px;
+    width: 26px; height: 20px; border-radius: 3px; border: 1.5px solid #cc9900;
+}
+.card-1 .tier {
+    position: absolute; top: 28px; right: 32px;
+    font-size: 12px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+    background: linear-gradient(135deg, #ffd700, #ffb300);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.card-1 .member-id { font-size: 10px; color: #90caf9; letter-spacing: 2px; }
+.card-1 .member-name { font-size: 22px; font-weight: 700; letter-spacing: 1px; margin: 4px 0; }
+.card-1 .qrcode {
+    position: absolute; bottom: 24px; right: 32px;
+    width: 52px; height: 52px; background: #fff; border-radius: 8px; padding: 4px;
+}
+.card-1 .qr-grid {
+    display: grid; grid-template-columns: repeat(5, 1fr); gap: 2px; width: 100%; height: 100%;
+}
+.card-1 .qr-grid span { background: #1a3a6b; border-radius: 1px; }
+.card-1 .qr-grid span:nth-child(odd) { background: #0d1b3e; }
+.card-1 .brand { 
+    position: absolute; bottom: 28px; left: 32px; 
+    font-size: 16px; font-weight: 800; letter-spacing: 2px;
+    background: linear-gradient(135deg, #64b5f6, #90caf9);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+.card-1 .valid { font-size: 9px; color: #78909c; margin-top: 2px; }
+
+/* === CARD 2: LEGAL ACTION CARD === */
+.card-2 { background: linear-gradient(135deg, #1a0a0a 0%, #4a1515 40%, #2a0a0a 100%); }
+.card-2::before { background: #ef5350; }
+.card-2 .action-icon {
+    position: absolute; top: 24px; left: 32px; font-size: 28px; opacity: 0.9;
+}
+.card-2 .case-id { font-size: 10px; color: #ef9a9a; letter-spacing: 2px; font-family: monospace; }
+.card-2 .action-type {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: #ef5350; background: rgba(239,83,80,0.15); 
+    display: inline-block; padding: 2px 10px; border-radius: 4px; margin: 6px 0;
+}
+.card-2 .action-title { font-size: 20px; font-weight: 700; line-height: 1.2; }
+.card-2 .deadline {
+    position: absolute; bottom: 28px; right: 32px; text-align: right;
+}
+.card-2 .deadline .label { font-size: 8px; color: #ef9a9a; letter-spacing: 2px; text-transform: uppercase; }
+.card-2 .deadline .date { font-size: 28px; font-weight: 800; color: #ef5350; line-height: 1; }
+.card-2 .deadline .sub { font-size: 10px; color: #ef9a9a; }
+.card-2 .status {
+    position: absolute; bottom: 24px; left: 32px;
+    font-size: 10px; font-weight: 700; letter-spacing: 2px;
+    color: #ffd54f; background: rgba(255,213,79,0.2); padding: 4px 12px; border-radius: 12px;
+}
+
+/* === CARD 3: RIGHTS PASSPORT === */
+.card-3 { background: linear-gradient(135deg, #0a1a0a 0%, #1b4a1b 40%, #0a2a0a 100%); }
+.card-3::before { background: #66bb6a; }
+.card-3 .passport-header { display: flex; align-items: center; gap: 10px; }
+.card-3 .seal {
+    width: 48px; height: 48px; border-radius: 50%; 
+    border: 3px solid #ffd700; display: flex; align-items: center; justify-content: center;
+    font-size: 22px; background: rgba(255,215,0,0.1);
+}
+.card-3 .rights-count { font-size: 36px; font-weight: 800; color: #66bb6a; }
+.card-3 .rights-label { font-size: 9px; color: #81c784; letter-spacing: 2px; }
+.card-3 .right-list {
+    display: flex; gap: 8px; margin: 12px 0; flex-wrap: wrap;
+}
+.card-3 .right-tag {
+    font-size: 9px; padding: 4px 10px; border-radius: 12px;
+    background: rgba(102,187,106,0.2); color: #a5d6a7; font-weight: 600;
+}
+.card-3 .cite { font-size: 8px; color: #81c784; font-style: italic; }
+.card-3 .passport-id { font-size: 9px; color: #a5d6a7; letter-spacing: 1px; }
+
+/* === CARD 4: LAWYER VERIFIED CARD === */
+.card-4 { background: linear-gradient(135deg, #0d0d2b 0%, #1a1a5e 40%, #0d0d3b 100%); }
+.card-4::before { background: #7c4dff; }
+.card-4 .verified-badge {
+    position: absolute; top: 20px; right: 20px;
+    width: 40px; height: 40px; border-radius: 50%; 
+    background: linear-gradient(135deg, #7c4dff, #651fff);
+    display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.card-4 .license-no { font-size: 10px; color: #b39ddb; letter-spacing: 2px; }
+.card-4 .lawyer-name { font-size: 20px; font-weight: 700; }
+.card-4 .specialty {
+    font-size: 10px; color: #ce93d8; letter-spacing: 1px; 
+    background: rgba(206,147,216,0.15); padding: 3px 10px; border-radius: 4px; display: inline-block; margin: 6px 0;
+}
+.card-4 .rating { color: #ffd54f; font-size: 13px; letter-spacing: 2px; }
+.card-4 .cases { font-size: 10px; color: #b39ddb; }
+.card-4 .scan-line {
+    position: absolute; bottom: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, #7c4dff, transparent);
+    animation: scan 2s infinite;
+}
+@keyframes scan {
+    0% { opacity: 0.3; } 50% { opacity: 1; } 100% { opacity: 0.3; }
+}
+
+/* === CARD 5: DIGITAL LEGAL ID === */
+.card-5 { background: linear-gradient(135deg, #0f0f1a 0%, #1c1c3a 40%, #0f0f2a 100%); }
+.card-5::before { background: #4dd0e1; }
+.card-5 .digi-id { position: absolute; top: 28px; left: 32px; font-size: 28px; }
+.card-5 .digi-hash { font-size: 8px; color: #80cbc4; font-family: monospace; letter-spacing: 1px; word-break: break-all; opacity: 0.7; }
+.card-5 .digi-name { font-size: 20px; font-weight: 700; }
+.card-5 .digi-verify {
+    font-size: 9px; padding: 3px 8px; border-radius: 4px;
+    background: rgba(77,208,225,0.2); color: #4dd0e1; letter-spacing: 1px;
+    display: inline-block;
+}
+.card-5 .nfc-icon { 
+    position: absolute; bottom: 24px; right: 32px;
+    font-size: 32px; opacity: 0.3;
+}
+.card-5 .sig-line {
+    position: absolute; bottom: 50px; left: 32px; right: 100px;
+    height: 1px; background: rgba(255,255,255,0.2);
+}
+.card-5 .sig-label { font-size: 7px; color: #78909c; letter-spacing: 2px; }
+
+/* Section labels */
+.section-label {
+    width: 100%; text-align: center; font-size: 13px; letter-spacing: 4px;
+    color: #78909c; margin: 40px 0 10px 0; text-transform: uppercase;
+    border-top: 1px solid rgba(255,255,255,0.08); padding-top: 40px;
+}
+.section-label:first-of-type { border: none; padding-top: 0; }
+</style>
+</head>
+<body>
+
+<h1>⚖️ LegalAI Thailand</h1>
+<h2>คอลเลกชัน — บัตรกฎหมายสำหรับประชาชน</h2>
+
+<!-- ===== CARD 1: MEMBER ===== -->
+<div class="section-label">🪪 บัตรสมาชิก LegalAI</div>
+<div class="card card-1">
+    <div class="chip"></div>
+    <div class="tier">✦ GOLD MEMBER ✦</div>
+    <div style="margin-top: 50px;">
+        <div class="member-id">LEGALAI ID: LAI-2026-0042</div>
+        <div class="member-name">สมชาย ใจดี</div>
+    </div>
+    <div class="qrcode">
+        <div class="qr-grid">
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span><span></span>
+        </div>
+    </div>
+    <div class="brand">LEGALAI</div>
+    <div class="valid">VALID THRU 12/28 &nbsp;|&nbsp; MEMBER SINCE 2026</div>
+</div>
+
+<!-- ===== CARD 2: LEGAL ACTION ===== -->
+<div class="section-label">⚖️ บัตรดำเนินการทางกฎหมาย</div>
+<div class="card card-2">
+    <div class="action-icon">⚡</div>
+    <div style="margin-top: 45px;">
+        <div class="case-id">CASE NO. LA-2026-0891-FR</div>
+        <div class="action-type">⚖️ ฟ้องร้องคดีผู้บริโภค</div>
+        <div class="action-title">ถูกโกงซื้อของ<br>ออนไลน์ 50,000 บาท</div>
+    </div>
+    <div class="status">📋 ระหว่างดำเนินการ</div>
+    <div class="deadline">
+        <div class="label">กำหนดส่งเอกสาร</div>
+        <div class="date">15</div>
+        <div class="sub">พฤศจิกายน 2569</div>
+    </div>
+</div>
+
+<!-- ===== CARD 3: RIGHTS PASSPORT ===== -->
+<div class="section-label">🛡️ บัตรคุ้มครองสิทธิประชาชน</div>
+<div class="card card-3">
+    <div class="passport-header" style="margin-top: 8px;">
+        <div class="seal">⚖️</div>
+        <div>
+            <div class="passport-id">RIGHTS PASSPORT · RP-2026-0192</div>
+            <div style="font-size:18px;font-weight:700;">คุณนภา รักษ์ธรรม</div>
+        </div>
+    </div>
+    <div class="right-list">
+        <div class="right-tag">👷 สิทธิแรงงาน</div>
+        <div class="right-tag">💰 คุ้มครองผู้บริโภค</div>
+        <div class="right-tag">🏠 สิทธิผู้เช่า</div>
+        <div class="right-tag">📋 ร้องเรียนราชการ</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;">
+        <div class="cite">พ.ร.บ.คุ้มครองแรงงาน 2541 · พ.ร.บ.ผู้บริโภค 2522</div>
+        <div style="text-align:right;">
+            <div class="rights-count">4</div>
+            <div class="rights-label">สิทธิที่ตรวจสอบแล้ว</div>
+        </div>
+    </div>
+</div>
+
+<!-- ===== CARD 4: LAWYER VERIFIED ===== -->
+<div class="section-label">👨‍⚖️ บัตรทนายที่ผ่านการรับรอง LegalAI</div>
+<div class="card card-4">
+    <div class="verified-badge">✓</div>
+    <div style="margin-top: 8px;">
+        <div class="license-no">ทน. 12345/2565 · สภาทนายความ</div>
+        <div class="lawyer-name">ดร. วิชาญ กฎหมาย</div>
+        <div class="specialty">⚖️ กฎหมายแรงงาน · คดีผู้บริโภค</div>
+    </div>
+    <div style="margin-top: 12px;">
+        <div class="rating">★★★★★ 4.9</div>
+        <div class="cases">238 คดีสำเร็จ · response SLA 98%</div>
+    </div>
+    <div style="font-size:8px;color:#b39ddb;margin-top:auto;">
+        VERIFIED BY LEGALAI · REVIEWED AUG 2026
+    </div>
+    <div class="scan-line"></div>
+</div>
+
+<!-- ===== CARD 5: DIGITAL LEGAL ID ===== -->
+<div class="section-label">🔐 บัตรประจำตัวดิจิทัลทางกฎหมาย</div>
+<div class="card card-5">
+    <div class="digi-id">🆔</div>
+    <div style="margin-top: 45px;">
+        <div class="digi-hash">0x8a3f...7b2e9c1d</div>
+        <div class="digi-name">สมศรี รักษ์สิทธิ์</div>
+        <div class="digi-verify" style="margin-top:8px;">✓ VERIFIED BY LEGALAI</div>
+    </div>
+    <div class="sig-line"></div>
+    <div class="sig-label">DIGITAL SIGNATURE</div>
+    <div class="nfc-icon">📡</div>
+</div>
+
+</body>
+</html>
