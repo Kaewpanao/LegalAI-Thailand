@@ -22,7 +22,7 @@ metadata:
 6. 🔁 ขยาย Scope → "แล้วภาคธุรกิจล่ะ?" (⚠️ ระวัง creep!)
 ```
 
-## 8 Thinking Methods
+## 10 Thinking Methods
 
 | # | Method | Trigger Words |
 |---|--------|--------------|
@@ -34,6 +34,8 @@ metadata:
 | 6 | **Distribution-First** | "LINE คือช่องทางหลัก — 90%+ คนไทยใช้" "อย่าทำเป็น afterthought" |
 | 7 | **Closed-Loop Execution** | "push ยัง?" "เสร็จยัง?" — แก้แล้วต้อง verify + push = done |
 | 8 | **Precision Demands** | "เช็คก่อนตอบ" "อย่าเดา" — ต้อง verify ทุก fact ก่อนตอบ |
+| 9 | **Adversarial QA** | "ทีมแดงถาม ทีมน้ำเงินตอบ" — จ้าง subagent สองฝั่งตรวจสอบกันเอง หา mismatch |
+| 10 | **Parallel-Then-Compile** | ยิง subagent หลายตัวพร้อมกัน → รวบรวมผลทีหลัง — "เสร็จ! รวมรายงาน + อัปโหลด!" |
 
 ## Strengths → How Bess Supports
 
@@ -52,6 +54,7 @@ metadata:
 | 🔁 **Perfectionism Loop** | Push: "20/21 tests — launch เลย!" |
 | ⏰ **Time Sensitivity** | เช็คเวลาจริงทุกครั้ง — `date -u` +7 → ห้ามเดา (เบสเคยผิด 3 ครั้งใน session เดียว!) |
 | 📊 **Detail Verification** | พี่ณัฐเช็คทุก detail — ถ้าไม่แน่ใจ → search/code/extract ก่อนตอบ ไม่ใช่เดา |
+| 🎨 **Visual Communication** | พี่ณัฐใช้สีอย่างมี functional meaning — 🔴=ถาม/ปัญหา, 🔵=ตอบ/ตรวจสอบ, ✅=ผ่าน, ❌=ไม่ผ่าน — ไม่ใช่แค่สวย แต่สื่อสารได้ |
 
 ## Bess's Role
 
@@ -114,3 +117,18 @@ metadata:
 พี่ณัฐแยก repo ชัดเจน: LegalAI-Thailand (research/docs) กับ legalai-thailand-citizen (code)
 - 🎯 **What this means:** Research กับ Code แยกกัน → ไม่ปน → แต่เชื่อมกันด้วย vision เดียว
 - 📌 **Concrete:** Tech stack: React 19 + DeepSeek AI + Supabase RLS + Cloudflare Workers + Drizzle ORM
+
+### 8. 🔴🔵 "Two-Team Adversarial QA" — สองทีม สองสี สองมุมมอง
+พี่ณัฐสร้าง QA workflow แบบ adversarial: 🔴 ทีมแดงสร้างคำถามจาก spec → 🔵 ทีมน้ำเงินตรวจคำตอบจากโค้ดจริง → หา MISMATCH
+- 🎯 **What this means:** อย่า verify ทางเดียว — ต้องมีคนถามและคนตอบคนละคนกัน → ลด blind spot
+- 📌 **Concrete:** 430 คำถาม 3 platform (Consumer 280 + Business 55 + Lawyer 95) → 96.1% pass → พบ 19 mismatches → P0/P1/P2 priority
+
+### 9. ⚡ "Parallel Subagent Economy" — ยิงพร้อม รอทีเดียว รวมทีหลัง
+พี่ณัฐใช้ parallel subagent batches แทนการทำ sequential — deleg_8d75a22f (Lawyer Q&A) กับ deleg_b9d62395 (2-Team Report) วิ่งพร้อมกัน → compile ทีเดียว
+- 🎯 **What this means:** งานที่ independent กัน → parallelize ทันที ไม่ต้องรอ sequential
+- 📌 **Concrete:** 2 subagents รวม 706 วินาที แต่ wall-clock แค่ ~7 นาที (แทนที่จะเป็น 12 นาทีถ้าทำทีละตัว)
+
+### 10. 📐 "Spec-to-Code Gap Analysis" — ไม่ใช่แค่ verify แต่หา gap
+พี่ณัฐไม่ได้แค่ถามว่า "โค้ดตรงตาม spec มั้ย?" แต่ถามว่า "spec กับโค้ดต่างกันตรงไหน?" → gap analysis mindset
+- 🎯 **What this means:** Mismatch ไม่ใช่ bug เสมอไป — อาจเป็น intentional deviation ที่ต้อง document หรือ sync กลับ
+- 📌 **Concrete:** 19 mismatches แบ่งเป็น intentional (guardrails ที่โค้ดเพิ่มมา 8 ข้อ) vs unintentional ( deduction 14 vs 15, ขั้นตอน onboarding สลับ)
