@@ -17,13 +17,13 @@ drive_svc = build('drive', 'v3', credentials=creds)
 folder_id = "1GjfqDCjyH60ERuMTrfjgTDopSOV-KG1h"
 
 media = MediaFileUpload(
-    r"D:\hermes-bess-project\docs\legalai_master_project_blueprint.md",
+    r"D:\hermes-bess-project\docs\legalai_complete_breakdown.md",
     mimetype='text/markdown',
     resumable=True
 )
 
 file_metadata = {
-    'name': '📋 LegalAI Thailand — Master Project Blueprint',
+    'name': '📊 Complete Breakdown — 35 หัวข้อหลัก · 180+ หัวข้อย่อย',
     'parents': [folder_id],
     'mimeType': 'application/vnd.google-apps.document'
 }
