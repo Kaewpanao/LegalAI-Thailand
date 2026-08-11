@@ -132,3 +132,27 @@ metadata:
 พี่ณัฐไม่ได้แค่ถามว่า "โค้ดตรงตาม spec มั้ย?" แต่ถามว่า "spec กับโค้ดต่างกันตรงไหน?" → gap analysis mindset
 - 🎯 **What this means:** Mismatch ไม่ใช่ bug เสมอไป — อาจเป็น intentional deviation ที่ต้อง document หรือ sync กลับ
 - 📌 **Concrete:** 19 mismatches แบ่งเป็น intentional (guardrails ที่โค้ดเพิ่มมา 8 ข้อ) vs unintentional ( deduction 14 vs 15, ขั้นตอน onboarding สลับ)
+
+### 11. 💰 "Pricing Psychology — Anchoring" — ทำให้ 299 ดูถูกมาก
+พี่ณัฐใช้ anchoring effect อย่างแนบเนียน — ตั้ง anchor ที่ "ค่าทนาย 30,000-80,000 บาท" ก่อน แล้วค่อยโชว์ราคา "299 บาท" → ผู้ใช้รู้สึกว่าถูกมากเมื่อเทียบกับทางเลือก
+- 🎯 **What this means:** เวลาคิด pricing → ต้องมี anchor ก่อนเสมอ — "ถ้าไปจ้างทนายจริงต้องจ่าย X บาท" → แล้วค่อยบอกว่า LegalAI แค่ 299
+- 📌 **Concrete:** Concierge V3: ทุก gate ที่ขึ้นราคาจะแสดง comparison — "ทนาย 30K-80K vs 299", "คดีผู้บริโภคฟรีที่ศาล vs เราแค่ 299"
+- ⚠️ **Watch-out:** Anchor ต้อง truthful — พี่ณัฐใช้ตัวเลขจริงจากตลาด ไม่ overclaim
+
+### 12. 🚪 "Graduated Trust Gateway" — ไม่ใช่ free vs paid แต่เป็น trust ladder
+พี่ณัฐออกแบบ monetization แบบขั้นบันได — Gate P3: FREE (Phase 1-3) → ฿299 (Phase 4-7) → ฿999 (Phase 8) → ผู้ใช้ค่อยๆ build trust ทีละขั้น ไม่โดน paywall ตั้งแต่เริ่ม
+- 🎯 **What this means:** อย่าขายตั้งแต่แรก — ให้คุณค่าก่อน ขอดังค์ทีหลัง — พี่ณัฐให้ free ถึง 3 phases ก่อนคิดเงิน
+- 📌 **Concrete:** Concierge V3 มี 8 phases + 47 flows + 5 GAP flows (18K lines total) — ผู้ใช้ได้ experience คุณค่าก่อนถึง gate จ่ายเงิน
+- 🔑 **Key insight:** "ไม่ใช่แค่ freemium — มันคือ graduated trust building"
+
+### 13. 🗣️ "Real-World QA — ใช้คำถามคนจริง ไม่ใช่ code questions"
+พี่ณัฐ insist ให้ใช้คำถามภาษาไทยแบบคนจริงจาก Pantip/ฟอรั่มในการ QA — ไม่ใช่คำถามเชิงเทคนิคหรือภาษาอังกฤษ — เพราะ user จริงถามว่า "ฉันหยุดงาน 3 วันเจ้านายไล่ออก" ไม่ใช่ "termination clause violation"
+- 🎯 **What this means:** ทุก QA round ต้อง scrape/draw คำถามจากแหล่งคนไทยจริง — Pantip, Facebook groups, forums → ห้ามแต่งเอง
+- 📌 **Concrete:** QA format = 🔴 real Q (จากฟอรั่ม) + 🔵 legal answer (จากกฎหมาย) + 🤖 AI response + ✅/❌ verdict — 430 คำถามจาก 3 platforms
+- 🔑 **Why it matters:** คนไทยถามกฎหมายแบบไทยๆ — มี context วัฒนธรรม, อารมณ์, ความสัมพันธ์ — AI ต้องเข้าใจ subtext ไม่ใช่แค่ตัวบท
+
+### 14. 📋 "Evidence-First Accountability — ไม่มีรายงาน = ไม่มีเช็คลิสต์"
+พี่ณัฐมีหลักการ simple แต่ทรงพลัง: ถ้าไม่มีรายงาน — แปลว่ายังไม่ได้ทำ — checklist ทุกอย่างต้องมี output ที่จับต้องได้ (report, commit, GDoc link)
+- 🎯 **What this means:** จบแต่ละ milestone → ต้องมี artifact — report → GDoc link → GitHub commit → ห้ามบอกว่า "เสร็จแล้ว" เฉยๆ
+- 📌 **Concrete:** พี่ณัฐบอกเสมอว่า "ไม่มีรายงาน = ไม่มีเช็คลิสต์" — ทำให้ทุกงานมี paper trail ชัดเจน ตรวจสอบย้อนหลังได้
+- 🔑 **Why it matters:** ป้องกัน false sense of completion — artifact คือหลักฐานเดียวที่เชื่อถือได้
