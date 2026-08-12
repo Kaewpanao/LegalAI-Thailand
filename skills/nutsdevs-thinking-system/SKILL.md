@@ -1,7 +1,7 @@
 ---
 name: nutsdevs-thinking-system
 description: "Use when working with พี่ณัฐ. User-first, bias-for-action."
-version: 1.0.0
+version: 1.2.0
 author: Bess (observed from Nut Kaewpanao)
 metadata:
   hermes:
@@ -156,3 +156,28 @@ metadata:
 - 🎯 **What this means:** จบแต่ละ milestone → ต้องมี artifact — report → GDoc link → GitHub commit → ห้ามบอกว่า "เสร็จแล้ว" เฉยๆ
 - 📌 **Concrete:** พี่ณัฐบอกเสมอว่า "ไม่มีรายงาน = ไม่มีเช็คลิสต์" — ทำให้ทุกงานมี paper trail ชัดเจน ตรวจสอบย้อนหลังได้
 - 🔑 **Why it matters:** ป้องกัน false sense of completion — artifact คือหลักฐานเดียวที่เชื่อถือได้
+
+### 15. ❤️ "Warm Tone First, Legal Accuracy Second" — Empathy > Correctness
+พี่ณัฐ prioritize **emotional delivery เหนือความถูกต้องทางกฎหมาย 100%** — V3 ถูก reject ทั้งที่เนื้อหาถูกต้องตามกฎหมายทุกตัวอักษร แต่ tone เป็นหุ่นยนต์ → V4 WARM ปรับ tone อย่างเดียว ผ่านทันที
+- 🎯 **What this means:** "เพื่อนช่วยเพื่อน" ไม่ใช่ "ตำรากฎหมาย" — ผู้ใช้ต้องรู้สึกว่าเราอยู่ข้างเขา ไม่ใช่แค่ quote มาตรา
+- 📌 **Concrete:** 7 Tone Rules ที่พี่ณัฐ demand: (1) empathy opening (2) social proof (3) empowerment (4) explain-why (5) value anchor — 299 vs lawyer (6) free trial (7) human language — ห้ามใช้คำว่า "Compound Case Detected" หรือ "Human Drive Detected" โดยเด็ดขาด
+- ⚠️ **Pitfall:** ถ้าใช้ robot label → พี่ณัฐจะ catch ได้ทันทีและ reject — "ไม่ใช่ robot แบบนี้อีก" — warmth คือ non-negotiable
+- 🔑 **Why it matters:** คนไทยเวลามีปัญหากฎหมาย — กลัว, สับสน, ไม่รู้จะเริ่มตรงไหน — empathy คือ first aid ก่อน law
+
+### 16. 🔄 "Build→Test→Gap→Fix→Re-test" — Engineering Loop, Not Linear
+พี่ณัฐไม่เชื่อว่าทำเสร็จทีเดียว — workflow เป็น **วง loop** ไม่ใช่เส้นตรง → Agent1 สร้างคำถาม → Agent2 test flows → Agent3 report gaps → Build → Re-test → วนซ้ำ
+- 🎯 **What this means:** ไม่มีคำว่า "เสร็จ" — มีแต่คำว่า "ยังมีอะไรให้แก้อีก" — พี่ณัฐ expect อย่างน้อย 6 rounds
+- 📌 **Concrete:** V4 WARM Concierge — 52 flows, 20K lines — ผ่าน 6 engineering cycles กว่าจะ sign-off → แต่ละรอบเจอ gap ใหม่เสมอ
+- 🔑 **Why it matters:** mindset นี้ป้องกัน premature launch — "perfect" ไม่มีอยู่จริง แต่ "ดีพอ" ต้องผ่านการ test หลายรอบ
+
+### 17. 📋 "Checklist Before Code" — Report as Blueprint, Not Documentation
+รายงานไม่ใช่ documentation หลังทำ — แต่เป็น **blueprint ก่อนลงมือ** — "ไม่มีรายงาน = ไม่มีเช็คลิสต์"
+- 🎯 **What this means:** Workflow: report/checklist → test 1 sample format → train agents ด้วย gold standard → separate creator + verifier → แล้วค่อย build
+- 📌 **Concrete:** Agent process: Agent1 สร้าง real user questions → Agent2 test flows → Agent3 report gaps → Build → Re-test — ทุกขั้นตอนมี output file
+- 🔑 **Why it matters:** แยก "คิด" กับ "ทำ" — report คือ spec, code คือ implementation — ห้ามทำก่อนคิด
+
+### 18. 🎭 "HTML Visual Thinking" — คิดเป็นภาพ, สีมี Functional Meaning
+พี่ณัฐคิดเป็นภาพ — ชอบ **HTML visual** ประกอบคำอธิบาย → สีไม่ได้ใช้เพราะสวย แต่ใช้เพราะ **สื่อสาร functional meaning**
+- 🎯 **What this means:** 🔴 = ถาม/ปัญหา, 🔵 = ตอบ/ตรวจสอบ, ✅ = ผ่าน, ❌ = ไม่ผ่าน — visual language ที่ repeatable ในทุก project
+- 📌 **Concrete:** Reports ต้องมี HTML output + GDoc link — ไม่ใช่ text-only → HTML ทำให้เห็น structure ชัดเจน (flowcharts, comparison tables, color-coded QA results)
+- 🔑 **Why it matters:** Visual aids ลด cognitive load — พี่ณัฐ scan สีแล้วเข้าใจ state ทันที ไม่ต้องอ่านทีละบรรทัด
