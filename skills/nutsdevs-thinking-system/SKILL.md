@@ -1,7 +1,7 @@
 ---
 name: nutsdevs-thinking-system
 description: "Use when working with พี่ณัฐ. User-first, bias-for-action."
-version: 1.2.0
+version: 1.3.0
 author: Bess (observed from Nut Kaewpanao)
 metadata:
   hermes:
@@ -181,3 +181,53 @@ metadata:
 - 🎯 **What this means:** 🔴 = ถาม/ปัญหา, 🔵 = ตอบ/ตรวจสอบ, ✅ = ผ่าน, ❌ = ไม่ผ่าน — visual language ที่ repeatable ในทุก project
 - 📌 **Concrete:** Reports ต้องมี HTML output + GDoc link — ไม่ใช่ text-only → HTML ทำให้เห็น structure ชัดเจน (flowcharts, comparison tables, color-coded QA results)
 - 🔑 **Why it matters:** Visual aids ลด cognitive load — พี่ณัฐ scan สีแล้วเข้าใจ state ทันที ไม่ต้องอ่านทีละบรรทัด
+
+---
+
+## 🚀 Chujai Legal (13 ส.ค. 2569) — วันแห่งการ Ship
+
+> วันนี้พี่ณัฐเปลี่ยนโหมดจาก "research/docs" เป็น "build จริง" — สร้าง SaaS ทั้งตัวจากศูนย์ในวันเดียว
+> LegalAI เก่า = research/docs only แต่ **Chujai Legal (ชูใจ ลีกัล)** = product จริง ที่ push ขึ้น GitHub
+
+### 19. 🚀 "จาก Research สู่ Real Product" — Ship ทั้ง SaaS ในวันเดียว
+พี่ณัฐพิสูจน์ว่าหลังจาก research ยาวๆ จนได้ blueprint ครบ — ก็ **ลงมือ build จริง** ทั้งตัวใน ~12.5 ชม. (06:07 → 18:49) ไม่มี "เดี๋ยวค่อยทำ" — 10 commits ต่อเนื่อง
+- 🎯 **What this means:** เบสต้องจับสัญญาณว่าเมื่อไหร่พี่ณัฐ "เปลี่ยนโหมด" → ชื่อใหม่ (ชูใจ ลีกัล) + repo ใหม่ (Chujai-Legal) + stack จริง (Next.js 16.3 + React 19) = ลุยเลย ไม่ใช่แค่ docs อีก
+- 📌 **Concrete:** 10 commits: Foundation → Consumer App (10 หน้า) → Lawyer+Admin (13 หน้า) → API 16 routes → Supabase → Concierge → QA fix — 24 หน้า page.tsx ครอบคลุม 4 role (marketing/consumer/lawyer/admin)
+- 🔑 **Why it matters:** "ชูใจ" = ชูใจ/ปลอบประโลมใจ — ขนาดชื่อแบรนด์ก็ warm tone — brand identity = empathy ตั้งแต่ตั้งชื่อ
+
+### 20. 📐 "Master Design → Code ใน 24 ชม." — Design เป็น Blueprint ไม่ใช่ Documentation
+Master design 5,298 บรรทัด (12 ส.ค.) กลายเป็น SaaS ทั้งตัวในวันถัดมา — โค้ดถูก **transcribe ตรงๆ ลง data layer** ไม่ใช่ "อ่านผ่านๆ แล้วเขียนใหม่"
+- 🎯 **What this means:** ทุก data module ต้อง traceable กลับไป design doc ได้ — `lib/legal/categories.ts` ← §C.1, `guardrails.ts` ← §B.1, `packages/definitions.ts` ← §D.2
+- 📌 **Concrete:** BUILD_REPORT ระบุชัด "Data-layer source — transcribed from Master Design §C.1/§D.2" — พี่ณัฐจะเช็คว่าโค้ดตรงกับ design doc มั้ย ถ้าไม่ตรง = mismatch ต้อง sync กลับ (ต่อยอด #10)
+- 🔑 **Why it matters:** Design doc ที่ดี = โค้ด build ได้เลยเกือบ 1:1 — ลดเวลาตัดสินใจระหว่าง build เพราะทุกอย่างตัดสินใจไว้แล้ว
+
+### 21. 🔒 "Guardrails as Code" — Empathy + Safety ถูก enforce ที่ Runtime
+V4 WARM tone + safety rules ไม่ได้อยู่แค่ใน docs — compile ลงโค้ดจริง: `lib/legal/guardrails.ts` (15 rules ขยายจาก 7 ใน §B.1) + `lib/legal/guardrails-check.ts` ที่ regex-map must-never violations → **block** แล้ว substitute ด้วย safe answer
+- 🎯 **What this means:** ทุก AI output ผ่าน `checkGuardrails()` — ละเมิด must-never = โดนบล็อก + แทนที่ด้วยคำตอบปลอดภัยทันที ไม่ใช่แค่เตือน
+- 📌 **Concrete:** 5 must-never ที่ enforce ด้วยโค้ด: outcome prediction, false promise, direct advice, lawyer ranking, fabricated citations — แต่ละอันมี `wrong`/`right` example ฝังในโค้ด
+- 🔑 **Why it matters:** "Warm" ไม่ใช่สไตล์การเขียน — มันคือ non-negotiable ที่ enforce ด้วย code เหมือน type checker — empathy ถูกยกระดับเป็น engineering constraint
+
+### 22. 🎚️ "Fear Calibration" — Empathy กลายเป็น Data Structure
+พี่ณัฐ systematize empathy ลึกที่สุดเท่าที่เคย: `lib/legal/fear-calibration.ts` = 4 ระดับอารมณ์ (panic/urgent/concerned/planning) แต่ละระดับมี emoji + urgency badge + accent color + tone rules + response style + urgency window → AI tone ถูก tune ตามอารมณ์ user
+- 🎯 **What this means:** อย่าใช้ tone เดียวกับทุกคน — คน panic ต้องการ reassurance-first, คน planning ต้องการ efficient — ระดับกำหนดทั้งสีทั้งคำพูด
+- 📌 **Concrete:** `panic` = 🚨 "reassurance-first", `planning` = 📋 "efficient" — tone rules ถูก inject เข้า system prompt จริง
+- 🔑 **Why it matters:** นี่คือ V4 WARM ที่ถูกยกระดับเป็นระบบ — ไม่ใช่แค่ "พูดเพราะ" แต่ "พูดให้ตรงกับอารมณ์คนที่กำลังกลัว/สับสน/วางแผน"
+
+### 23. 🇹🇭 "Thai-Localization ระดับโค้ด" — ไม่ใช่แค่ภาษาไทย
+พี่ณัฐคิด localization ถึงระดับ infrastructure: **PromptPay QR** (ไม่ใช่บัตรเครดิต), **Omise** (payment gateway ไทย), **LINE Login + Messaging API**, คำค้นภาษาไทยแนวสแลง (**งัด/ทอง/telegram/รูปโป๊**), avatar initials แบบไทย
+- 🎯 **What this means:** เวลาคิด feature → ถาม "คนไทยจ่ายด้วยอะไร? ค้นด้วยคำอะไร? อยู่บนแอปอะไร?" — แล้ว build ตามนั้น
+- 📌 **Concrete:** search keywords ขยายเพิ่มคำจริงที่คนไทยพิมพ์ — "งัด" (งัดบ้าน), "รูปโป๊" (revenge porn) — ไม่ใช่ศัพท์กฎหมาย → AI เข้าใจ subtext ไทยๆ
+- 🔑 **Why it matters:** ต่อยอดจาก #2 (LINE ไม่ใช่ afterthought) — ตอนนี้เป็นทั้งชุด: PromptPay + Omise + LINE + Thai slang + Thai initials — localization ไม่ใช่ "แปล" แต่ "คิดแบบคนไทย"
+
+### 24. 🔌 "Zero-Dependency Native fetch" — Hermetic + Offline-First
+พี่ณัฐสั่ง **ไม่ใช้ SDK ใดๆ** (`@supabase/supabase-js`, `@ai-sdk`, Omise/LINE SDK) — ทุก integration เป็น thin native `fetch` wrapper ที่ degrade ลง deterministic local mock เมื่อไม่มี env key
+- 🎯 **What this means:** `npm run build` ต้อง hermetic (ไม่ต้อง install network), dev ต้องรันได้ offline ทั้งระบบ
+- 📌 **Concrete:** 16 API routes รัน end-to-end ได้โดยไม่มี env key เลย — ทุก route fallback เป็น mock ที่ deterministic (login/register → mock session, payments → mock PromptPay QR)
+- 🔑 **Why it matters:** philosophy = "ทำให้มันรันได้เสมอ" — ลด dependency risk, dev/test เร็ว, ไม่ติด network — แนวคิดเดียวกับ "ไม่มีรายงาน = ไม่มีเช็คลิสต์" แต่กับเรื่อง dependency
+
+### 25. 📈 "Measured QA Loop" — 58% → 97% ด้วยตัวเลขจริง
+Build→Test→Gap→Fix→Re-test loop ตอนนี้มี metric: QA live test วัด match 58% → fix → **97%** — fix ไม่ใช่ "แก้ๆ ไป" แต่มี taxonomy: guardrail false-positive, empty sections, sanitization, routing scoring
+- 🎯 **What this means:** ทุก fix ต้องวัดผลด้วยตัวเลข — "ดีขึ้นจาก X เป็น Y" ไม่ใช่ "ดีขึ้นเฉยๆ" — ตัวเลขคือ sign-off
+- 📌 **Concrete:** `scripts/qa-live-test-expanded.mjs` = live test script ที่วัด match rate จริง → 58% → 97% หลัง fix 7 ไฟล์
+- 🔑 **Why it matters:** ต่อยอด #16 — loop เดิม แต่ตอนนี้มี metric เพื่อรู้ว่า "จบเมื่อไหร่" (97% คือผ่าน) — ป้องกัน perfectionism loop ไม่รู้จบด้วย threshold ที่ชัดเจน
+
