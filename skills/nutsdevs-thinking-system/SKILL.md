@@ -1,7 +1,7 @@
 ---
 name: nutsdevs-thinking-system
 description: "Use when working with พี่ณัฐ. User-first, bias-for-action."
-version: 1.3.0
+version: 1.4.0
 author: Bess (observed from Nut Kaewpanao)
 metadata:
   hermes:
@@ -230,4 +230,40 @@ Build→Test→Gap→Fix→Re-test loop ตอนนี้มี metric: QA live
 - 🎯 **What this means:** ทุก fix ต้องวัดผลด้วยตัวเลข — "ดีขึ้นจาก X เป็น Y" ไม่ใช่ "ดีขึ้นเฉยๆ" — ตัวเลขคือ sign-off
 - 📌 **Concrete:** `scripts/qa-live-test-expanded.mjs` = live test script ที่วัด match rate จริง → 58% → 97% หลัง fix 7 ไฟล์
 - 🔑 **Why it matters:** ต่อยอด #16 — loop เดิม แต่ตอนนี้มี metric เพื่อรู้ว่า "จบเมื่อไหร่" (97% คือผ่าน) — ป้องกัน perfectionism loop ไม่รู้จบด้วย threshold ที่ชัดเจน
+
+---
+
+## 🔎 LegalAI Citizen — Ground Truth จากโค้ด (16 ส.ค. 2569)
+
+> วันนี้พี่ณัฐสลับ context กลับจาก Chujai Legal มาที่ `legalai-thailand-citizen` แล้วถามคำถามที่ดูเรียบง่ายมาก — "ขอดูว่า 12 หมวด 45 ปัญหาย่อยของเรามีอะไรบ้าง" — แต่คำถามนี้เปิดเผยหลักคิดลึกๆ หลายข้อ
+
+### 26. 🧭 "โค้ดคือความจริงแท้ ไม่ใช่เอกสาร" — Code as Ground Truth
+พี่ณัฐถาม "12 หมวด 45 ปัญหาย่อย" ตามตัวเลขที่เอกสาร/commit message เขียนไว้ แต่เบสอ่านโค้ดจริงพบว่ามีแค่ **33** ไม่ใช่ 45 — พี่ณัฐพอใจที่เบสจับ discrepancy ได้ ไม่ได้พอใจที่เบสท่องตัวเลขตามเอกสาร
+- 🎯 **What this means:** เวลาพี่ณัฐถาม "มีอะไรบ้าง" → อ่านโค้ดจริง (grep/read_file) ห้ามเปิด report เก่ามาตอบ — เอกสาร งานวิจัย แม้แต่ commit message ก็ drift จากโค้ดได้เสมอ
+- 📌 **Concrete:** `app/categories/[category]/page.tsx` มี `PROBLEM_EXAMPLES` = 33 รายการ, `diagnosis-config.ts` มี 12 category (grep "category:" ได้ 12 จุด) — แต่ commit `60b603f` เขียนว่า "29 → 45 problems" → ตัวเลขบน commit กับโค้ดจริงไม่ตรงกัน
+- 🔑 **Why it matters:** ต่อยอด #4 "อย่าเดา" ไปอีกขั้น — คราวนี้แม้แต่ "ความจริงที่เคยเขียนไว้เอง" ก็เชื่อไม่ได้ 100% — **โค้ดที่รันอยู่คือ single source of truth** เบสต้อง verify กับไฟล์จริงทุกครั้ง
+
+### 27. 🎭 "หลักคิดการนำเสนอ" — พี่ณัฐคิดถึง algorithm การโชว์ ไม่ใช่แค่ข้อมูล
+คำถามเต็มของพี่ณัฐคือ "หลักคิดหรืออัลกอริทึมอย่างไรในการ**นำเสนอ** user" — ไม่ได้ถามแค่ "มีหมวดอะไรบ้าง" แต่ถามว่า "เราจัดลำดับให้ user เห็นยังไง ทำไมเรียงแบบนี้" → ทุก UI element ถูก map กลับไปหา human drive
+- 🎯 **What this means:** เบสต้องอธิบายได้เสมอว่า "ทำไมองค์ประกอบนี้อยู่ตรงนี้ + มันตอบ drive ไหน" — ไม่ใช่แค่ list ฟีเจอร์
+- 📌 **Concrete:** 6 องค์ประกอบใน `/categories/[category]` มีลำดับ+drive กำกับ: ① Emergency banner → 🛡️ Survival ② Gain message → 💰 Benefit ③ Fear calibration → 🤝 Empathy ④ Urgency badge → ⏰ Loss Aversion ⑤ Social proof → 👥 Belonging ⑥ CTA → ⚡ Action
+- 🔑 **Why it matters:** 22 Human Drives ไม่ใช่แค่เอกสารงานวิจัย — พี่ณัฐเอามาเป็น **สถาปัตยกรรมของหน้าเว็บ** ทุกหน้า ทุก block ต้องตอบ drive ได้
+
+### 28. 💪 "Gain Framing เหนือ Loss Framing" — ภาษาเชิงบวก ไม่ขู่ให้กลัว
+ทุกหมวดมี `gainMessages` ที่เขียนแบบ positive: "คุณมีสิทธิได้รับค่าชดเชย" ไม่ใช่ "คุณกำลังเสียสิทธิ" — คนกลัวอยู่แล้ว อย่าซ้ำเติมด้วย loss framing
+- 🎯 **What this means:** เขียน copy ต้องถาม "ประโยคนี้ทำให้ user รู้สึก**มีพลัง**หรือรู้สึก**กลัวกว่าเดิม**?" — ถ้ากลัวกว่าเดิม = เขียนใหม่
+- 📌 **Concrete:** "💪 คุณมีสิทธิได้รับค่าชดเชย" (labour), "💡 มีทางออกสำหรับปัญหาหนี้" (debt), "💬 ชื่อเสียงของคุณมีค่า" (defamation) — 12 ข้อล้วน positive + empowerment
+- 🔑 **Why it matters:** ต่อยอด V4 WARM (#15) — warmth ไม่ใช่แค่ "พูดเพราะ" แต่ "**frame ให้ positive**" — Gain Framing คือ empathy ในรูปของ grammar
+
+### 29. 🚨 "Safety-First — ฉุกเฉินก่อนข้อมูล"
+`EMERGENCY_CATEGORIES = [crime, online_fraud, accident]` — 3 หมวดนี้อันตรายต่อชีวิต/ทรัพย์ → หน้าแสดง **banner เบอร์ฉุกเฉิน (191/1441/1300) ก่อนข้อมูลกฎหมายทุกอย่าง**
+- 🎯 **What this means:** ก่อนให้ข้อมูล ต้องถาม "มีกรณีไหนที่ข้อมูลช่วยไม่ได้ ต้องบอกให้ user ทำอะไรทันทีไหม?" — triage ความปลอดภัยก่อน
+- 📌 **Concrete:** banner แดง "🆘 ฉุกเฉิน — ติดต่อ 191 (ตำรวจ) / 1441 (ปราบอาชญากรรมออนไลน์) / 1300 (ช่วยเหลือสังคม) ทันที" ขึ้นเป็น block แรกสุดของหน้า
+- 🔑 **Why it matters:** "ทางรอดก่อนความรู้" — สำหรับคนที่กำลังถูกข่มขู่/ถูกดูดเงิน ข้อมูลกฎหมายไม่มีค่าถ้าเขายังไม่ปลอดภัย — safety คือด่านแรกของ empathy
+
+### 30. ⏰ "Urgency เป็น data field ไม่ใช่แค่ copy"
+ทุกปัญหาย่อยมี field `urgency` (immediate/days/weeks/months) → map เป็น badge สี 4 ระดับโดยอัตโนมัติ — ความเร่งด่วนไม่ใช่แค่คำปลอบ แต่เป็น **structured data** ที่ drive UI
+- 🎯 **What this means:** เวลาออกแบบ content ต้องคิด "ความเร่งด่วน" เป็น field ที่ sort/filter ได้ ไม่ใช่ข้อความแนบ
+- 📌 **Concrete:** `urgencyLabels` = `immediate` 🆘 แดง / `days` ⏰ เหลือง / `weeks` 📅 ฟ้า / `months` 📋 เทา — 33 ปัญหาย่อยทุกตัวมี urgency กำกับ
+- 🔑 **Why it matters:** ต่อยอด #22 (Fear Calibration เป็น data) — ตอนนี้ urgency ก็เป็น data เช่นกัน → อนาคตเอาไป sort ปัญหา "ด่วนสุดก่อน", filter, หรือ inject เข้า system prompt ได้
 
