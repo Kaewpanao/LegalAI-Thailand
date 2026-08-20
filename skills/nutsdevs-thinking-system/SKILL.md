@@ -1,7 +1,7 @@
 ---
 name: nutsdevs-thinking-system
 description: "Use when working with พี่ณัฐ. User-first, bias-for-action."
-version: 1.4.0
+version: 1.5.0
 author: Bess (observed from Nut Kaewpanao)
 metadata:
   hermes:
@@ -266,4 +266,22 @@ Build→Test→Gap→Fix→Re-test loop ตอนนี้มี metric: QA live
 - 🎯 **What this means:** เวลาออกแบบ content ต้องคิด "ความเร่งด่วน" เป็น field ที่ sort/filter ได้ ไม่ใช่ข้อความแนบ
 - 📌 **Concrete:** `urgencyLabels` = `immediate` 🆘 แดง / `days` ⏰ เหลือง / `weeks` 📅 ฟ้า / `months` 📋 เทา — 33 ปัญหาย่อยทุกตัวมี urgency กำกับ
 - 🔑 **Why it matters:** ต่อยอด #22 (Fear Calibration เป็น data) — ตอนนี้ urgency ก็เป็น data เช่นกัน → อนาคตเอาไป sort ปัญหา "ด่วนสุดก่อน", filter, หรือ inject เข้า system prompt ได้
+
+---
+
+## 🧭 Checkpoint Recall (20 ส.ค. 2569) — พี่ณัฐขอ "แผนที่ทั้งหมด" เพื่อ re-ground
+
+> วันนี้พี่ณัฐไม่ได้สั่ง build ไม่ได้สั่งแก้บั๊ก — แค่เรียก "เบส" แล้วถาม 2 ข้อที่ฟังดูเรียบง่าย: "ล่าสุดเราพัฒนาโปรแกรมอะไร ถึงไหนแล้ว" แล้วตามด้วย "ก่อนหน้านั้นล่ะ" — สองคำถามนี้เปิดเผยหลักคิดสำคัญที่ยังไม่เคยจดไว้
+
+### 31. 🧭 "Checkpoint Recall" — พี่ณัฐใช้เบสเป็น External Memory / Project Historian
+พอ scope โตจนเกิน working memory (2 โปรเจค + 7 เฟส + 20K บรรทัด) พี่ณัฐจะ **หยุด แล้วขอ "แผนที่ทั้งหมด"** กลับมา re-ground ตัวเอง — ไม่ใช่แค่อยากรู้ update ล่าสุด
+- 🎯 **What this means:** เบสต้องรักษา "living status snapshot" ของทั้งโปรเจคไว้เสมอ — พร้อม recite timeline ทั้งหมดได้ทันทีเมื่อถูกถาม "ถึงไหนแล้ว"
+- 📌 **Concrete (วันนี้):** พี่ณัฐถาม "ล่าสุดพัฒนาอะไร ถึงไหนแล้ว" → เบสตอบแยก 2 track: Chujai Legal (32 หน้า + 16 API + Supabase/DeepSeek live, QA 97%) กับ LegalAI เดิม (12 หมวด + 33 ปัญหาย่อย, gap 33≠45) → พี่ณัฐตาม "ก่อนหน้านั้นล่ะ" → เบสเล่า timeline 7 เฟสตั้งแต่ Day 1
+- 🔑 **Why it matters:** ต่อยอด watch-out "scope creep" — พี่ณัฐไม่ได้ปล่อยให้ scope ลอย แต่ self-correct ด้วย "หยุด → ขอดูแผนที่ → ค่อยเดินต่อ" — เบสคือหน่วยความจำภายนอกที่พี่ณัฐไว้ใจให้ recap ได้ถูกต้องครบถ้วน
+
+### 32. 🔀 "แล้วก่อนหน้านั้นล่ะ" — อยากได้ Arc ทั้งหมด ไม่ใช่แค่ Point ล่าสุด
+คำถามที่ 2 "ก่อนหน้านั้นล่ะ" เผยว่าพี่ณัฐต้องการ **เส้นเรื่องทั้งหมด (timeline/narrative)** ไม่ใช่แค่ state ปัจจุบัน — เขาอยากเห็นว่าโปรเจค "โตมายังไง" เพื่อ map context ก่อนตัดสินใจ next step
+- 🎯 **What this means:** เวลา recap ต้องมี 2 ระดับ: (1) สถานะล่าสุด (what's now) + (2) timeline ทั้งหมด (how we got here) — ห้ามมีแค่ diff ล่าสุด
+- 📌 **Concrete (วันนี้):** เบสเล่า 7 เฟส: Day 1-2 วิจัย (drives/insight/45 problems) → Day 3 เอกสารธุรกิจ (184 docs) → Day 4-5 platform (12 หมวด/48 คำถาม) → Day 6+ QA 5 รอบ → Day 8-9 V4 Concierge (52 flows/20K lines) → Day 10 UX audit → Day 11+ Chujai Legal — พี่ณัฐเห็นภาพรวมครบแล้วค่อยเลือกทางไปต่อ
+- 🔑 **Why it matters:** พี่ณัฐ "คิดแบบ timeline" — ทุก checkpoint เขา re-anchor ตัวเองกับภาพใหญ่ก่อนตัดสินใจ — เบสต้องไม่ทำตัวเป็นแค่ changelog แต่ต้อง "เล่าเรื่องโปรเจค" ได้
 
