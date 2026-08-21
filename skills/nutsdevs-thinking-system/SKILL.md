@@ -285,3 +285,45 @@ Build→Test→Gap→Fix→Re-test loop ตอนนี้มี metric: QA live
 - 📌 **Concrete (วันนี้):** เบสเล่า 7 เฟส: Day 1-2 วิจัย (drives/insight/45 problems) → Day 3 เอกสารธุรกิจ (184 docs) → Day 4-5 platform (12 หมวด/48 คำถาม) → Day 6+ QA 5 รอบ → Day 8-9 V4 Concierge (52 flows/20K lines) → Day 10 UX audit → Day 11+ Chujai Legal — พี่ณัฐเห็นภาพรวมครบแล้วค่อยเลือกทางไปต่อ
 - 🔑 **Why it matters:** พี่ณัฐ "คิดแบบ timeline" — ทุก checkpoint เขา re-anchor ตัวเองกับภาพใหญ่ก่อนตัดสินใจ — เบสต้องไม่ทำตัวเป็นแค่ changelog แต่ต้อง "เล่าเรื่องโปรเจค" ได้
 
+---
+
+## 🔧 Kaedai RAG + zcode Handoff (21 ส.ค. 2569) — เบสสร้างหลังบ้าน, zcode สร้างหน้าบ้าน
+
+> วันนี้พี่ณัฐแยกทีมชัดเจน: **เบส = หลังบ้าน (RAG backend `deka-rag`, port 8787)**, **zcode = หน้าบ้าน (Kaedai/แก้ได้ SaaS)** — สองคนสร้างคนละครึ่ง แล้วจับมือกันผ่าน "API contract เดียว" วันที่เผยบทเรียนใหม่ 4 ข้อที่ยังไม่เคยจด
+
+### 33. 🧠 "รู้ต้นทุนแฝงของ Model — Reasoning เผา token ก่อนตอบ"
+`deepseek-v4-pro` เป็น reasoning model — มัน "คิด" ใน field `reasoning_content` ก่อน แล้วค่อยเขียนคำตอบใน `content` → เบสตั้ง `max_tokens=8000` ตอนแรก คิดว่าเกินพอ แต่ของจริง reasoning เผาไป **~7,586 token** เหลือให้ตอบแค่ 414 ตัว → `finish_reason: length`, content แทบว่าง
+- 🎯 **What this means:** อย่า assume พารามิเตอร์จากสามัญสำนึก — ต้องดู `usage` จริง (prompt_tokens / completion_tokens / reasoning) ก่อนสรุปว่า "ตั้งพอแล้ว"
+- 📌 **Concrete (วันนี้):** RAG test ครั้งแรก max_tokens=8000 → content ว่าง → เบส dump `usage` ดู → พบ reasoning เผา 7.5K → ขยับเป็น **16,000** → ตอบครบ finish_reason: stop
+- 🔑 **Why it matters:** ต่อยอด #4 "อย่าเดา" — คราวนี้แม้แต่ "ความรู้เรื่อง model" ก็ต้อง verify ด้วย output จริง ไม่ใช่เดาจากชื่อ model
+
+### 34. 🔌 "Response จริงคือ Ground Truth — ไม่ใช่ Prompt ที่เขียน" (ต่อยอด #26)
+เบสเขียน system prompt สั่งให้ DeepSeek คืน field `q` / `answer` (ตาม contract ที่คุยกับ zcode) แต่ model คืน `question` / `step`+`evidence`+`detail` จริง → ตอน parse อ่าน `q`/`answer` ได้ `None` ทั้งแถว
+- 🎯 **What this means:** เช่นเดียวกับ "โค้ดคือความจริงแท้ ไม่ใช่เอกสาร" — ตรงนี้คือ "**response จริงคือความจริงแท้ ไม่ใช่ prompt ที่เขียน**" — ต้อง dump JSON ตัวแรกดู key จริงก่อนประกาศ "เสร็จ"
+- 📌 **Concrete (วันนี้):** field `q`/`answer` เป็น None → เบส `print(json.dumps(questions[0], indent=2))` → เจอ key จริงคือ `question`, `impact`, `options` และ solutions ใช้ `step/evidence/detail` → แก้ contract ตาม key จริง
+- 🔑 **Why it matters:** AI ไม่ guarantee ตาม prompt 100% — output schema ต้อง **verify กับของจริง** ทุกครั้ง เหมือน verify กับโค้ด
+
+### 35. 🌐 "Thai UTF-8 ลงไปถึง Transport Layer" (ต่อยอด #23)
+ตอนทดสอบ API เบสส่งคำถามไทยผ่าน `curl -d` บน Windows/MSYS → byte ภาษาไทยถูกบิด → retrieval เพี้ยน กลายเป็นว่า "บั๊ก" ที่จริงไม่ใช่บั๊ก server แต่เป็น artifact ของวิธีส่ง
+- 🎯 **What this means:** localization ไม่ใช่แค่ "ใช้คำไทย/สแลงไทย" — รวมถึง "**ส่งภาษาไทยยังไงไม่เพี้ยน**" — ต้อง test ด้วย client ที่ user จริงใช้ (fetch/axios/Python urllib) ไม่ใช่ curl บน shell
+- 📌 **Concrete (วันนี้):** curl -d → retrieval ผิด → เปลี่ยนเป็น Python `urllib` ที่ `json.dumps(...).encode('utf-8')` → ได้ ม.653 ถูกต้องทันที
+- 🔑 **Why it matters:** "คิดแบบคนไทย" (#23) ต้องลากไปถึง infrastructure — ภาษาไทยเป็น byte sequence ที่ fragile กว่าภาษาอังกฤษ เสมอ test ด้วย UTF-8 แท้
+
+### 36. 🤝 "สองทีม หนึ่ง Contract" — Backend กับ Frontend ต้องล็อก JSON เดียวกันก่อนลงมือ
+โครงสร้างใหม่ของวันนี้: เบส build RAG backend (`deka-rag` → `/api/legal/analyze`, port 8787) ขณะที่ zcode build หน้าบ้าน Kaedai — ทั้งสองคู่ขนานกัน จุดเดียวที่ทำให้ "ต่อกันติด" คือ **contract + คำต้องห้าม + warm tone ที่ตรงกัน**
+- 🎯 **What this means:** ก่อนสองทีมลงมือ build คนละครึ่ง → ต้อง lock ไว้ก่อนว่า (1) API contract JSON (2) คำต้องห้าม 7 คำ (3) 5 ชั้น warm tone — เบสเขียน `WARM_TONE_PROMPT.md` + prompt ฉบับแก้ให้ zcode copy ไปเป๊ะๆ
+- 📌 **Concrete (วันนี้):** เบสแยกบทบาทชัด — หลังบ้านทำให้ "ถูกกฎหมาย" (threshold จริง ม.653 = 2,000 ไม่ใช่ 5000/10000) ขณะที่ zcode ทำหน้าบ้านให้ "อบอุ่น" — มาตรฐานกลางคือ 5 ชั้น empathy→ภาษาคน→action→กำลังใจ→กฎหมายท้าย
+- 🔑 **Why it matters:** ต่อยอด #7 "Two Repos One Vision" — ตอนนี้ vision แตกออกเป็น **สองมือสองสมอง** แล้ว — contract คือ "สัญญาใจ" ที่ทำให้สองครึ่งประกบกันสนิทโดยไม่ต้องรอกันทีละสเต็ป
+
+### 37. 🎭 "Bess = Psychology Critic ของ AI ตัวอื่น" — review แผน GPT ด้วย lens จิตวิทยา
+พี่ณัฐเอา "แผนแอป" ที่ ChatGPT เขียน (4 เมนู bottom nav + wizard) มาให้เบส review — งานของเบสไม่ใช่ "ทำตามแผน" แต่คือ "**หา layer ที่ generic AI มองไม่เห็น**" แล้วเติมกลับ
+- 🎯 **What this means:** GPT เก่งโครงสร้าง/flow แต่ขาด victim-perspective + 22 human drives — เบสคือ "ชั้นจิตวิทยา" ที่ทับลงไปบนผลของ AI ทั่วไป
+- 📌 **Concrete (วันนี้):** เบสเติม 6 จุดที่แผน GPT พลาด: (1) social proof "2,840 คนผ่านมาแล้ว" (2) value anchoring "ทนาย 30K-80K vs 299" (3) fear calibration ลึก 4 ระดับ+ปรับลำดับแสดงผล (4) empathy opening (5) explain-why ก่อนขอข้อมูล (6) edge case "Flash Express ได้มั้ย?"
+- 🔑 **Why it matters:** พี่ณัฐใช้เบสเป็น "เพื่อนที่อ่านแผนแล้วบอกว่ายังขาดอะไรด้านหัวใจ" — ไม่ใช่แค่ reviewer ภาษา แต่เป็น reviewer ด้าน empathy + consumer psychology
+
+### 38. ⏱️ "Cold Start คือ Design Constraint ไม่ใช่ Accident"
+RAG API ต้องโหลด BM25 index ~1.7GB + เรียก DeepSeek reasoning ~2 นาที → `/health` ตอบทันที แต่ `/analyze` ครั้งแรก timeout ที่ 180s — เบสเจอว่า timeout ต้องเผื่อ cold start ไม่ใช่ตั้งตาม steady-state
+- 🎯 **What this means:** เวลาออกแบบ API ที่มี heavy init → ตั้ง timeout ให้เผื่อ "ครั้งแรก" (cold start) เสมอ หรือ warm-up index ตอน server เริ่ม ไม่ใช่รอ request แรก
+- 📌 **Concrete (วันนี้):** `/health` ✅ แต่ analyze ครั้งแรก timeout 180s → เบสขยาย timeout เป็น 400-450s → ผ่าน — สาเหตุคือ BM25 โหลด ~1.7GB + reasoning 2 นาทีรวมกันเกิน
+- 🔑 **Why it matters:** ต่อยอด #24 "ทำให้มันรันได้เสมอ" — "รันได้" ต้องรวม "รันได้ตั้งแต่ request แรก" — cold start ต้องถูกคิดล่วงหน้า ไม่ใช่เจอทีหลังแล้วงง
+
